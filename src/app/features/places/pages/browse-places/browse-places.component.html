@@ -1,0 +1,100 @@
+<app-header [currentPage]="'places'"></app-header>
+<div class="browse-header-section">
+  <div class="container-x-small">
+    <div class="title-wrap-center-large">
+      <div class="margin-bottom-16">
+        <h2>
+          Guia de serviços<span class="text-color-primary"></span>
+        </h2>
+      </div>
+      <p>serviços de saúde, apoio a educação, trabalho e lazer para jovens com deficiência de Belo Horizonte</p>
+    </div>
+    <form action="/search" class="search w-form">
+      <div class="search-input-wrapper">
+        <img
+          src="https://cdn.prod.website-files.com/63337525695d8ba70ab44222/6344f0df34a6816523478691_Search%20Icon.svg"
+          loading="eager" alt="" class="icon-regular" />
+        <input class="search-field w-input" maxlength="256" name="query" placeholder="Pesquisar…" type="search"
+          id="search" required="" />
+      </div>
+      <input type="submit" class="search-button w-button" value="Pesquisar" />
+    </form>
+  </div>
+</div>
+
+<div class="browse-wrap">
+  <div class="browse-section">
+    <div class="container-regular">
+      <div class="w-layout-grid browse-grid">
+        <div class="browse-column">
+          <div class="w-form">
+            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
+              <div class="browse-menu">
+                <div class="filters-title-wrapper">
+                  <img
+                    src="https://cdn.prod.website-files.com/63337525695d8ba70ab44222/63562c0bf9e1cc52faddd26a_information-fill.svg"
+                    loading="eager" alt="" class="icon-regular" />
+                  <div class="detail text-color-primary">filtrar serviços</div>
+                </div>
+                <div *ngFor="let filter of filters" data-hover="false" data-delay="0"
+                  class="browse-dropdown w-dropdown">
+                  <div class="browse-dropdown-toggle w-dropdown-toggle" (click)="toggleDropdown(filter.name)">
+                    <div class="w-icon-dropdown-toggle"></div>
+                    <div class="subheading-regular">{{filter.label}}</div>
+                  </div>
+                  <nav class="dropdown-list w-dropdown-list" [class.w--open]="dropdownStates.get(filter.name)">
+                    <div *ngFor="let value of filter.values; let i = index" class="browse-check-wrapper"
+                      (click)="toggleCheckbox(filter.name+i, $event)">
+                      <label class="w-checkbox browse-checkbox">
+                        <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"
+                          [class.w--redirected-checked]="checkboxStates.get(filter.name+i)"></div>
+                        <input type="checkbox" id="checkbox-{{filter.name}}-{{i}}" name="checkbox-{{filter.name}}-{{i}}" data-name="checkbox-{{filter.name}}-{{i}}"
+                          (click)="$event.stopPropagation()" style="opacity: 0; position: absolute; z-index: -1" />
+                        <span class="paragraph-regular w-form-label">{{value.name}}</span>
+                      </label>
+                    </div>
+                  </nav>
+                </div>
+              </div>
+              <input type="submit" data-wait="Please wait..." class="filters-submit-button w-button" value="Submit" />
+            </form>
+          </div>
+        </div>
+        <div>
+          <div class="browse-title-wrapper">
+            <div class="paragraph-small">Mostrando: {{places.length}} serviços</div>
+          </div>
+          <div class="w-dyn-list">
+            <div role="list" class="jobs-collection-list w-dyn-items">
+              <div *ngFor="let place of places; let i=index" role="listitem" class="w-dyn-item">
+                <a href="/place/{{place.id}}" class="job-border w-inline-block">
+                  <div class="job-company-wrap">
+                    <div>
+                      <div class="subheading-regular">{{place.name}}</div>
+                    </div>
+                  </div>
+                  <div class="margin-bottom-24">
+                    <h6>{{place.attendance_types | join: 'name'}}</h6>
+                  </div>
+                  <div class="job-tags">
+                    <div class="job-category">{{place.service_type.name}}</div>
+                  </div>
+                  <div class="job-card-details-wrap">
+                    <div class="job-details-wrap">
+                      <img
+                        src="https://cdn.prod.website-files.com/63337525695d8ba70ab44222/63337525695d8b2585b442b4_Location%20Icon.svg"
+                        loading="eager" alt="" class="icon-regular" />
+                      <div>{{place.regionals | join: 'name'}}</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

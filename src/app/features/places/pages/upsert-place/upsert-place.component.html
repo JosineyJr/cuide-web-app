@@ -1,0 +1,88 @@
+<app-header></app-header>
+
+<div class="job-submit-section">
+  <div class="container-small">
+    <div class="title-wrap-center">
+      <div class="margin-bottom-12">
+        <h2>Cadastre um serviço</h2>
+      </div>
+    </div>
+    <div class="job-submission-form-wrapper">
+      <div class="w-form">
+        <form id="email-form" name="email-form" data-name="Email Form" method="get" class="job-submission-form">
+          <div class="job-submission-form-section-wrapper">
+            <div id="w-node-_7456eeba-3d14-bf7a-9553-9036844f9100-748849b9" class="job-submission-form-number">
+              <div>1</div>
+            </div>
+            <div id="w-node-_35571b41-498a-13b4-c487-1c69096208df-748849b9" class="job-submission-form-section">
+              <div class="margin-bottom-24">
+                <h5>Sobre</h5>
+              </div>
+              <label for="Job-Title">Nome</label>
+              <input type="text" class="form-field w-input" maxlength="256" name="Job-Title" data-name="Job Title"
+                placeholder="" id="Job-Title" />
+              <label for="Category">Endereço</label>
+              <input type="text" class="form-field w-input" maxlength="256" name="Category" data-name="Category"
+                placeholder="" id="Category" required="" />
+              <label for="Employment-Type">Contato</label>
+              <input type="text" class="form-field w-input" maxlength="256" name="Employment-Type"
+                data-name="Employment Type" placeholder="" id="Employment-Type" required="" />
+              <label for="Job-Level">Site</label>
+              <input type="text" class="form-field w-input" maxlength="256" name="google-maps-link" placeholder=""
+                id="google-maps-link" required="" />
+              <label for="Job-Level">Google Maps link</label>
+              <input type="text" class="form-field w-input" maxlength="256" name="Job-Level" data-name="Job Level"
+                placeholder="" id="Job-Level" required="" />
+              <label for="Job-Description">Observação</label>
+              <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
+                data-name="Job Description" class="form-field-large w-input"></textarea>
+            </div>
+          </div>
+          <div class="job-submission-form-section-wrapper">
+            <div id="w-node-_7456eeba-3d14-bf7a-9553-9036844f9100-748849b9" class="job-submission-form-number">
+              <div>2</div>
+            </div>
+            <div id="w-node-_7198811f-31c1-b07d-c003-160563186162-748849b9" class="job-submission-form-section">
+              <div class="margin-bottom-24">
+                <h5>Especialidades</h5>
+              </div>
+              <label>Eixo</label>
+              <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="segments"
+                [(ngModel)]="selectedSegments" [settings]="settingsSegments" (onSelect)="onItemSelect($event)"
+                (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)" [ngModelOptions]="{standalone: true}" class="margin-bottom-24">
+              </ng-multiselect-dropdown>
+              <label>Tipo de serviço</label>
+              <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="serviceTypes"
+                [(ngModel)]="selectedServiceTypes" [settings]="settingsServiceTypes" (onSelect)="onItemSelect($event)"
+                (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)" [ngModelOptions]="{standalone: true}" class="margin-bottom-24">
+              </ng-multiselect-dropdown>
+              <label>Regionais</label>
+              <ng-multiselect-dropdown [data]="regionals" [(ngModel)]="selectedRegionals" [settings]="settingsRegionals"
+                (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+                [ngModelOptions]="{standalone: true}" id="regionals" class="margin-bottom-24">
+              </ng-multiselect-dropdown>
+              <label>Tipos de atendimentos</label>
+              <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="attendanceTypes"
+                [(ngModel)]="selectedAttendanceTypes" [settings]="settingsAttendanceTypes"
+                (onSelect)="onItemSelect($event)" (onDeSelect)="OnItemDeSelect($event)"
+                (onSelectAll)="onSelectAll($event)" (onDeSelectAll)="onDeSelectAll($event)"
+                [ngModelOptions]="{standalone: true}" class="margin-bottom-24">
+              </ng-multiselect-dropdown>
+              <label>Formas de encaminhamento</label>
+              <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="referenceWays"
+                [(ngModel)]="selectedReferenceWays" [settings]="settingsReferenceWays" (onSelect)="onItemSelect($event)"
+                (onDeSelect)="OnItemDeSelect($event)" (onSelectAll)="onSelectAll($event)"
+                (onDeSelectAll)="onDeSelectAll($event)" [ngModelOptions]="{standalone: true}" class="margin-bottom-24">
+              </ng-multiselect-dropdown>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>
