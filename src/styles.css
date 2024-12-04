@@ -277,10 +277,13 @@ html.w-mod-touch * {
   text-decoration: none;
   cursor: pointer;
   border-radius: 0;
+  outline: none;
 }
 input.w-button {
+  width: 100%;
   -webkit-appearance: button;
 }
+
 html[data-w-dynpage] [data-w-cloak] {
   color: transparent !important;
 }
@@ -2073,6 +2076,7 @@ textarea.w-select {
 .w-users-userformbutton {
   width: 100%;
   text-align: center;
+  margin-bottom: 2dvh;
 }
 
 .w-users-userformfooter {

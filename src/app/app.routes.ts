@@ -21,7 +21,7 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'place/:id',
+    path: 'places/:id',
     loadComponent: () =>
       import(
         './features/places/pages/place-details/place-details.component'
@@ -38,5 +38,12 @@ export const routes: Routes = [
     path: 'login',
     loadComponent: () =>
       import('./core/auth/login/login.component').then((m) => m.LoginComponent),
+  },
+  {
+    path: 'management',
+    loadComponent: () =>
+      import(
+        './features/management/pages/management/management.component'
+      ).then((m) => m.ManagementComponent),
   },
 ];

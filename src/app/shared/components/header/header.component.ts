@@ -8,7 +8,7 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
   styleUrl: './header.component.css',
 })
 export class HeaderComponent {
-  @Input() currentPage!: 'about' | 'places';
+  @Input() currentPage: 'about' | 'places' | 'management' | null = null;
 
   expand = false;
 
