@@ -280,7 +280,6 @@ html.w-mod-touch * {
   outline: none;
 }
 input.w-button {
-  width: 100%;
   -webkit-appearance: button;
 }
 

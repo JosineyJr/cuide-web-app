@@ -27,8 +27,8 @@
                 </div>
                 <div *ngFor="let entity of entities" data-hover="false" data-delay="0"
                   class="browse-dropdown w-dropdown">
-                  <input readonly class="w-users-userformbutton button-primary w-button"
-                    value="{{entity.label}}" (click)="setEntity(entity.name)" />
+                  <input readonly class="w-users-userformbutton button-primary w-button" value="{{entity.label}}"
+                    (click)="setEntity(entity.name)" />
                 </div>
               </div>
             </form>
@@ -36,9 +36,8 @@
         </div>
         <div>
           <div class="browse-title-wrapper">
-            <div class="paragraph-small">Mostrando: {{currentEntities.length}} serviços</div>
-            <input readonly class="button-primary w-button"
-              value="Adicionar {{currentEntity.name | lowercase | singularize}}" />
+            <div class="paragraph-small">Mostrando: {{currentEntities.length}} {{currentEntity.name | lowercase }}</div>
+            <div class="button-primary w-button">Adicionar {{currentEntity.name | lowercase | singularize}}</div>
           </div>
           <div class="w-dyn-list">
             <div role="list" class="jobs-collection-list w-dyn-items">
