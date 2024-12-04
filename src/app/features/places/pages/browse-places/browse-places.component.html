@@ -69,11 +69,11 @@
                 <a href="/places/{{place.id}}" class="job-border w-inline-block">
                   <div class="job-company-wrap">
                     <div>
-                      <div class="subheading-regular">{{place.name}}</div>
+                      <div class="subheading-regular">{{place.attendance_types | join: 'name'}}</div>
                     </div>
                   </div>
                   <div class="margin-bottom-24">
-                    <h6>{{place.attendance_types | join: 'name'}}</h6>
+                    <h6>{{place.name}}</h6>
                   </div>
                   <div class="job-tags">
                     <div class="job-hours">{{place.segment.name}}</div>

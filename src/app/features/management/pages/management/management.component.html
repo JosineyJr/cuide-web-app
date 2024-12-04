@@ -43,15 +43,15 @@
             <div role="list" class="jobs-collection-list w-dyn-items">
               <div *ngFor="let entity of currentEntities; let i=index" role="listitem" class="w-dyn-item">
                 <a href="/{{currentEntity.type}}/{{entity.id}}" class="job-border w-inline-block">
-                  <div class="job-company-wrap">
+                  <div class="job-company-wrap" *ngIf="isInstanceOfPlace(entity)">
                     <div>
-                      <div class="subheading-regular">{{entity.name}}</div>
+                      <div class="subheading-regular">{{getPlace(entity).attendance_types | join: 'name'}}</div>
                     </div>
                   </div>
+                  <div class="margin-bottom-24">
+                    <h6>{{entity.name}}</h6>
+                  </div>
                   <ng-container *ngIf="isInstanceOfPlace(entity)">
-                    <div class="margin-bottom-24">
-                      <h6>{{getPlace(entity).attendance_types | join: 'name'}}</h6>
-                    </div>
                     <div class="job-tags">
                     <div class="job-hours">{{getPlace(entity).segment.name}}</div>
                       <div class="job-category">{{getPlace(entity).service_type.name}}</div>
