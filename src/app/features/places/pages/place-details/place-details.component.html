@@ -1,15 +1,15 @@
 <app-header></app-header>
 
-<div class="section-regular">
+<div class="section-regular" *ngIf="!loading">
   <div class="container-regular">
     <div data-w-id="bacfde91-e5ae-599d-8bac-a9d503461e3b" class="w-layout-grid job-post-grid">
       <div class="job-post-content">
         <div class="job-post-header-wrap">
           <div>
-            <h5>Associação Brasileira de Esclerose e Tuberose</h5>
+            <h5>{{place.name}}</h5>
           </div>
         </div>
-        <h6>Fisioterapia, Terapia Ocupacional, Fonoaudiologia, Assistência Social</h6>
+        <h6>{{place.attendance_types | join: 'name'}}</h6>
         <div class="job-detail-wrap">
           <div class="detail-item">
             <div class="icon-regular w-embed">
@@ -19,7 +19,7 @@
                   fill="#4640DE" />
               </svg>
             </div>
-            <div class="subheading-small">Centro-Sul</div>
+            <div class="subheading-small">{{place.regionals | join: 'name'}}</div>
           </div>
           <div class="detail-item">
             <div class="icon-regular w-embed">
@@ -29,28 +29,26 @@
                   fill="#3EBB7F" />
               </svg>
             </div>
-            <div class="subheading-small">Público </div>
+            <div class="subheading-small">{{place.service_type.name}} </div>
           </div>
         </div>
         <div class="job-post-divider"></div>
         <div class="rich-text w-richtext">
           <h5>Formas de encaminhamento</h5>
           <ul role="list">
-            <li>Através do Centro de Referência de Assistência Social (CRAS), do SUS (Posto de saúde), ou demanda
-              espontânea</li>
+            <li *ngFor="let referenceWay of place.reference_ways">{{referenceWay.name}}</li>
           </ul>
           <h5>Critérios de admissão no serviço</h5>
           <ul role="list">
-            <li>Prioritariamente, jovens entre 0 e 13 anos. </li>
-            <li>Condições atendidas: autismo, TDAH, PC à depender da condição clínica, com esclerose tuberosa.</li>
+            <li *ngFor="let admissionCriteria of place.admission_criteria">{{admissionCriteria.name}}</li>
           </ul>
           <h5>Site</h5>
-          <a href="https://www.instagram.com/abet.ong/" target="_blank"
-            rel="noopener noreferrer">https://www.instagram.com/abet.ong/</a>
+          <a href="{{place.website}}" target="_blank"
+            rel="noopener noreferrer">{{place.website}}</a>
           <h5>Contato</h5>
-          <p>(31) 3221-1244</p>
+          <p>{{place.phone_number}}</p>
           <h5>Observações</h5>
-          <p></p>
+          <p>{{place.observations}}</p>
         </div>
         <div class="job-post-divider"></div>
         <div class="margin-bottom-40">
@@ -58,7 +56,7 @@
             <h4>Ende</h4>
             <h4 class="business-name">reço</h4>
           </div>
-          <p>Rua do Ouro, nº 1121, Serra/ Tel: (31) 3221-1244 / Regional: Centro-Sul</p>
+          <p>{{place.address}}</p>
         </div>
       </div>
       <div class="job-post-side-menu">
@@ -68,16 +66,12 @@
           </div>
           <div class="google-map w-richtext">
             <figure style="padding-bottom:45%" class="w-richtext-align-center w-richtext-figure-type-video">
-              <div>
-                <iframe allowfullscreen="true" frameborder="0" scrolling="no"
-                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3752.154584853198!2d-43.9757963!3d-19.8756934!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0xa690e41d99baeb%3A0xa77fb26bb5c5021b!2sEscola%20de%20Educa%C3%A7%C3%A3o%20F%C3%ADsica%2C%20Fisioterapia%20e%20Terapia%20Ocupacional!5e0!3m2!1sen!2sbr!4v1733047109262!5m2!1sen!2sbr"
-                  width="600" height="450" style="border:0;" allowfullscreen="" loading="eager"
-                  referrerpolicy="no-referrer-when-downgrade"></iframe>
+              <div [innerHTML]="safeEmbedLink">
               </div>
             </figure>
           </div>
           <div class="job-post-divider"></div>
-          <a href="https://maps.app.goo.gl/FLciNChVuBANSQdo6?g_st=com.google.maps.preview.copy" target="_blank"
+          <a href="{{place.google_maps_link}}" target="_blank"
             rel="noopener noreferrer" class="button-primary w-button">Ver detalhes</a>
         </div>
       </div>

@@ -13,6 +13,7 @@ export interface Place {
   website: string;
   observations: string;
   google_maps_link: string;
+  google_maps_embed_link: string;
   service_type: ServiceType;
   segment: Segment;
   regionals: Array<Regional>;

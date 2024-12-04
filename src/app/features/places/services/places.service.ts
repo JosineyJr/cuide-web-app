@@ -14,4 +14,12 @@ export class PlacesService {
       .get<Array<Place>>('/places', { params: { page: page } })
       .pipe(map((data: Array<Place>) => data));
   }
+
+  get(ID: number): Observable<Place> {
+    return this.http.get<Place>(`/places/${ID}`);
+  }
+
+  filter(filter: string): Observable<Array<Place>> {
+    return this.http.get<Array<Place>>(`/places/filter?${filter}`);
+  }
 }

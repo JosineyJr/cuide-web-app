@@ -12,6 +12,7 @@ export class Place {
   website: string;
   observations: string;
   google_maps_link: string;
+  google_maps_embed_link: string;
   service_type: ServiceType;
   segment: Segment;
   regionals: Array<Regional>;
@@ -26,6 +27,7 @@ export class Place {
     website: string,
     observations: string,
     google_maps_link: string,
+    google_maps_embed_link: string,
     service_type: ServiceType,
     segment: Segment,
     regionals: Array<Regional>,
@@ -39,6 +41,7 @@ export class Place {
     this.website = website;
     this.observations = observations;
     this.google_maps_link = google_maps_link;
+    this.google_maps_embed_link = google_maps_embed_link;
     this.service_type = service_type;
     this.segment = segment;
     this.regionals = regionals;
