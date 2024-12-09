@@ -61,12 +61,12 @@
         </div>
         <div *ngIf="!loading">
           <div class="browse-title-wrapper">
-            <div class="paragraph-small">Mostrando: {{places.length}} serviços</div>
+            <div class="paragraph-small">Mostrando: {{places.places.length}} serviços</div>
           </div>
           <div class="w-dyn-list">
             <div role="list" class="jobs-collection-list w-dyn-items">
-              <div *ngFor="let place of places; let i=index" role="listitem" class="w-dyn-item">
-                <a href="/places/{{place.id}}" class="job-border w-inline-block">
+              <div *ngFor="let place of places.places; let i=index" role="listitem" class="w-dyn-item">
+                <a href="/place-details/{{place.id}}" class="job-border w-inline-block">
                   <div class="job-company-wrap">
                     <div>
                       <div class="subheading-regular">{{place.attendance_types | join: 'name'}}</div>
@@ -91,6 +91,7 @@
               </div>
             </div>
           </div>
+          <app-show-more *ngIf="hasMore" [entity]="'places'" (result)="onPlacesLoaded($event)" />
         </div>
         <div *ngIf="loading">
           <p>PESQUISANDO...</p>

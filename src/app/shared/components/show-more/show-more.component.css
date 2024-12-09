@@ -1,0 +1,7 @@
+button{
+  margin-top: 3vh;
+}
+
+button:disabled{
+  opacity: 0.5;
+}

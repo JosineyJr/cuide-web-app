@@ -14,4 +14,20 @@ export class RegionalsService {
       .get<Array<Regional>>('/regionals')
       .pipe(map((data: Array<Regional>) => data));
   }
+
+  get(ID: number): Observable<Regional> {
+    return this.http.get<Regional>(`/regionals/${ID}`);
+  }
+
+  create(regional: Regional): Observable<void> {
+    return this.http.post<void>(`/regionals`, {
+      name: regional.name,
+    });
+  }
+
+  update(regional: Regional): Observable<void> {
+    return this.http.put<void>(`/regionals/${regional.id}`, {
+      name: regional.name,
+    });
+  }
 }

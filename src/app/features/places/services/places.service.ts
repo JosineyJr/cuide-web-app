@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Place } from '../models/place.model';
+import { Place, PlaceList } from '../models/place.model';
 import { map, Observable } from 'rxjs';
 
 @Injectable({
@@ -9,10 +9,10 @@ import { map, Observable } from 'rxjs';
 export class PlacesService {
   constructor(private readonly http: HttpClient) {}
 
-  list(page: number): Observable<Array<Place>> {
+  list(page: number): Observable<PlaceList> {
     return this.http
-      .get<Array<Place>>('/places', { params: { page: page } })
-      .pipe(map((data: Array<Place>) => data));
+      .get<PlaceList>('/places', { params: { page: page } })
+      .pipe(map((data: PlaceList) => data));
   }
 
   get(ID: number): Observable<Place> {

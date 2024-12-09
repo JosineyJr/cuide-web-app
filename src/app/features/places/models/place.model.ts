@@ -21,3 +21,8 @@ export interface Place {
   admission_criteria: Array<AdmissionCriteria>;
   attendance_types: Array<AttendanceType>;
 }
+
+export interface PlaceList {
+  metadata: { pages: number; total_places: number };
+  places: Array<Place>;
+}

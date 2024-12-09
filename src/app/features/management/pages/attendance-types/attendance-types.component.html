@@ -1,0 +1,35 @@
+<app-header></app-header>
+
+<div class="job-submit-section">
+  <div class="container-small">
+    <div class="title-wrap-center">
+      <div class="margin-bottom-12">
+        <h2>{{attendanceTypeID == null ? 'Cadastre' : 'Altere' }} um tipo de atendimento</h2>
+      </div>
+    </div>
+    <div class="job-submission-form-wrapper">
+      <div class="w-form">
+        <form [formGroup]="attendanceTypeForm" (ngSubmit)="onSubmit()" id="email-form" name="email-form" data-name="Email Form" method="get"
+          class="job-submission-form">
+          <div class="job-submission-form-section-wrapper">
+            <div id="w-node-_7456eeba-3d14-bf7a-9553-9036844f9100-748849b9" class="job-submission-form-number">
+              <div>1</div>
+            </div>
+            <div id="w-node-_35571b41-498a-13b4-c487-1c69096208df-748849b9" class="job-submission-form-section">
+              <div class="margin-bottom-24">
+                <h5>Sobre</h5>
+              </div>
+              <label for="Job-Title">Nome</label>
+              <input type="text" class="form-field w-input" maxlength="256" name="Job-Title" data-name="Job Title"
+                placeholder="" id="Job-Title" formControlName="name" />
+            </div>
+          </div>
+          <button type="submit" [disabled]="attendanceTypeForm.invalid" class="button-primary">{{attendanceTypeID ==
+            null ? 'Cadastrar' : 'Alterar' }}</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-footer></app-footer>

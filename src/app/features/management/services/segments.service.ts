@@ -15,4 +15,20 @@ export class SegmentsService {
       .get<Array<Segment>>('/segments')
       .pipe(map((data: Array<Segment>) => data));
   }
+
+  get(ID: number): Observable<Segment> {
+    return this.http.get<Segment>(`/segments/${ID}`);
+  }
+
+  create(segments: Segment): Observable<void> {
+    return this.http.post<void>(`/segments`, {
+      name: segments.name,
+    });
+  }
+
+  update(segments: Segment): Observable<void> {
+    return this.http.put<void>(`/segments/${segments.id}`, {
+      name: segments.name,
+    });
+  }
 }

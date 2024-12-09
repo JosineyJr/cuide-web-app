@@ -37,7 +37,7 @@
         <div>
           <div class="browse-title-wrapper">
             <div class="paragraph-small">Mostrando: {{currentEntities.length}} {{currentEntity.name | lowercase }}</div>
-            <div class="button-primary w-button">Adicionar {{currentEntity.name | lowercase | singularize}}</div>
+            <div class="button-primary w-button" (click)="addEntity(currentEntity.type)">Adicionar {{currentEntity.name | lowercase | singularize}}</div>
           </div>
           <div class="w-dyn-list">
             <div role="list" class="jobs-collection-list w-dyn-items">

@@ -1,26 +1,26 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { HeaderComponent } from '../../../../shared/components/header/header.component';
-import { FooterComponent } from '../../../../shared/components/footer/footer.component';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { RegionalsService } from '../../services/regionals.service';
-import { Regional } from '../../models/regional.model';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
-import { AttendanceTypesService } from '../../services/attendance-types.service';
-import { AttendanceType } from '../../models/attendance-type.model';
-import { SegmentsService } from '../../services/segments.service';
 import { Segment } from '../../models/segment.model';
+import { ReferenceWay } from '../../models/reference-way.model';
+import { Regional } from '../../models/regional.model';
+import { AttendanceType } from '../../models/attendance-type.model';
 import {
-  NgMultiSelectDropDownModule,
   IDropdownSettings,
+  NgMultiSelectDropDownModule,
 } from 'ng-multiselect-dropdown';
 import { ServiceType } from '../../models/service-type.model';
-import { ServiceTypesService } from '../../services/service-types.service';
-import { ReferenceWaysService } from '../../services/reference-ways.service';
-import { ReferenceWay } from '../../models/reference-way.model';
+import { RegionalsService } from '../../../places/services/regionals.service';
+import { AttendanceTypesService } from '../../../places/services/attendance-types.service';
+import { SegmentsService } from '../../../places/services/segments.service';
+import { ServiceTypesService } from '../../../places/services/service-types.service';
+import { ReferenceWaysService } from '../../../places/services/reference-ways.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { HeaderComponent } from '../../../../shared/components/header/header.component';
+import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 
 @Component({
-  selector: 'app-upsert-place',
+  selector: 'app-places',
   imports: [
     FormsModule,
     NgMultiSelectDropDownModule,
@@ -28,10 +28,10 @@ import { ReferenceWay } from '../../models/reference-way.model';
     HeaderComponent,
     FooterComponent,
   ],
-  templateUrl: './upsert-place.component.html',
-  styleUrl: './upsert-place.component.css',
+  templateUrl: './places.component.html',
+  styleUrl: './places.component.css',
 })
-export class UpsertPlaceComponent implements OnInit {
+export class PlacesComponent implements OnInit {
   regionals: Array<Regional> = [];
   selectedRegionals: Array<Regional> = [];
   settingsRegionals: IDropdownSettings = {};

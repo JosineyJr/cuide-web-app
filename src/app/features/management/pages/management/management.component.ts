@@ -18,6 +18,7 @@ import { ReferenceWay } from '../../models/reference-way.model';
 import { Regional } from '../../models/regional.model';
 import { Segment } from '../../models/segment.model';
 import { ServiceType } from '../../models/service-type.model';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-management',
@@ -53,7 +54,8 @@ export class ManagementComponent implements OnInit {
     private readonly referenceWaysService: ReferenceWaysService,
     private readonly regionalsService: RegionalsService,
     private readonly segmentsService: SegmentsService,
-    private readonly serviceTypesService: ServiceTypesService
+    private readonly serviceTypesService: ServiceTypesService,
+    private readonly routerService: Router
   ) {}
 
   ngOnInit(): void {
@@ -197,5 +199,30 @@ export class ManagementComponent implements OnInit {
       | ServiceType
   ): Place {
     return entity as Place;
+  }
+
+  addEntity(type?: string) {
+    switch (type) {
+      case 'places':
+        this.routerService.navigate(['place']);
+        break;
+      case 'attendance-types':
+        this.routerService.navigate(['attendance-type']);
+        break;
+      case 'reference-ways':
+        this.routerService.navigate(['reference-way']);
+        break;
+      case 'regionals':
+        this.routerService.navigate(['regional']);
+        break;
+      case 'segments':
+        this.routerService.navigate(['segment']);
+        break;
+      case 'service-types':
+        this.routerService.navigate(['service-type']);
+        break;
+      default:
+        break;
+    }
   }
 }

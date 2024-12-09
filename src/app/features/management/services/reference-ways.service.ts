@@ -14,4 +14,20 @@ export class ReferenceWaysService {
       .get<Array<ReferenceWay>>('/reference-ways')
       .pipe(map((data: Array<ReferenceWay>) => data));
   }
+
+  get(ID: number): Observable<ReferenceWay> {
+    return this.http.get<ReferenceWay>(`/reference-ways/${ID}`);
+  }
+
+  create(referenceWay: ReferenceWay): Observable<void> {
+    return this.http.post<void>(`/reference-ways`, {
+      name: referenceWay.name,
+    });
+  }
+
+  update(referenceWay: ReferenceWay): Observable<void> {
+    return this.http.put<void>(`/reference-ways/${referenceWay.id}`, {
+      name: referenceWay.name,
+    });
+  }
 }

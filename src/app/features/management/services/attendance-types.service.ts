@@ -14,4 +14,20 @@ export class AttendanceTypesService {
       .get<Array<AttendanceType>>('/attendance-types')
       .pipe(map((data: Array<AttendanceType>) => data));
   }
+
+  get(ID: number): Observable<AttendanceType> {
+    return this.http.get<AttendanceType>(`/attendance-types/${ID}`);
+  }
+
+  create(attendanceType: AttendanceType): Observable<void> {
+    return this.http.post<void>(`/attendance-types`, {
+      name: attendanceType.name,
+    });
+  }
+
+  update(attendanceType: AttendanceType): Observable<void> {
+    return this.http.put<void>(`/attendance-types/${attendanceType.id}`, {
+      name: attendanceType.name,
+    });
+  }
 }

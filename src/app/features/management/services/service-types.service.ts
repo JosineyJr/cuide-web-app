@@ -14,4 +14,20 @@ export class ServiceTypesService {
       .get<Array<ServiceType>>('/service-types')
       .pipe(map((data: Array<ServiceType>) => data));
   }
+
+  get(ID: number): Observable<ServiceType> {
+    return this.http.get<ServiceType>(`/service-types/${ID}`);
+  }
+
+  create(serviceType: ServiceType): Observable<void> {
+    return this.http.post<void>(`/service-types`, {
+      name: serviceType.name,
+    });
+  }
+
+  update(serviceType: ServiceType): Observable<void> {
+    return this.http.put<void>(`/service-types/${serviceType.id}`, {
+      name: serviceType.name,
+    });
+  }
 }

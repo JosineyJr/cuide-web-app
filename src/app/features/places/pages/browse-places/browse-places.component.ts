@@ -1,4 +1,10 @@
-import { Component, inject, OnInit, DestroyRef } from '@angular/core';
+import {
+  Component,
+  inject,
+  OnInit,
+  DestroyRef,
+  createComponent,
+} from '@angular/core';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { SegmentsService } from '../../services/segments.service';
@@ -12,13 +18,12 @@ import { Regional } from '../../models/regional.model';
 import { AttendanceTypesService } from '../../services/attendance-types.service';
 import { AttendanceType } from '../../models/attendance-type.model';
 import { ReferenceWaysService } from '../../services/reference-ways.service';
-import { AdmissionCriteriaService } from '../../services/admission-criteria.service';
 import { ReferenceWay } from '../../models/reference-way.model';
-import { AdmissionCriteria } from '../../models/admission-criteria.model';
-import { Place } from '../../models/place.model';
+import { Place, PlaceList } from '../../models/place.model';
 import { PlacesService } from '../../services/places.service';
 import { JoinPipe } from '../../pipes/join.pipe';
 import { FormsModule } from '@angular/forms';
+import { ShowMoreComponent } from '../../../../shared/components/show-more/show-more.component';
 
 @Component({
   selector: 'app-browse-places',
@@ -28,6 +33,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     JoinPipe,
     FormsModule,
+    ShowMoreComponent,
   ],
   templateUrl: './browse-places.component.html',
   styleUrl: './browse-places.component.css',
@@ -47,11 +53,12 @@ export class BrowsePlacesComponent implements OnInit {
   query: Map<string, Array<number>> = new Map();
   searchQuery!: string;
   loading = false;
+  hasMore = true;
 
   dropdownStates: Map<string, boolean> = new Map();
   checkboxStates: Map<string, boolean> = new Map();
 
-  places: Array<Place> = [];
+  places!: PlaceList;
 
   destroyRef = inject(DestroyRef);
 
@@ -65,10 +72,11 @@ export class BrowsePlacesComponent implements OnInit {
     private readonly regionalsService: RegionalsService,
     private readonly attendanceTypesService: AttendanceTypesService,
     private readonly referenceWaysService: ReferenceWaysService,
-    private readonly placesService: PlacesService
+    public readonly placesService: PlacesService
   ) {}
 
   ngOnInit() {
+    this.loading = true;
     this.segmentsService
       .list()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -138,8 +146,12 @@ export class BrowsePlacesComponent implements OnInit {
       .list(1)
       .pipe(takeUntilDestroyed(this.destroyRef))
       .subscribe({
-        next: (places: Array<Place>) => {
-          this.places = places;
+        next: (placeList: PlaceList) => {
+          this.places = placeList;
+        },
+        complete: () => {
+          this.hasMore = this.places.metadata.pages > 1;
+          this.loading = false;
         },
       });
   }
@@ -197,18 +209,18 @@ export class BrowsePlacesComponent implements OnInit {
     this.debounceTimer = setTimeout(() => {
       const params = this.buildQuery(this.page);
 
-      this.loading = true;
-      this.placesService
-        .filter(params)
-        .pipe(takeUntilDestroyed(this.destroyRef))
-        .subscribe({
-          next: (places: Array<Place>) => {
-            this.places = places;
-          },
-          complete: () => {
-            this.loading = false;
-          },
-        });
+      // this.loading = true;
+      // this.placesService
+      //   .filter(params)
+      //   .pipe(takeUntilDestroyed(this.destroyRef))
+      //   .subscribe({
+      //     next: (places: Array<Place>) => {
+      //       this.places = places;
+      //     },
+      //     complete: () => {
+      //       this.loading = false;
+      //     },
+      //   });
     }, this.debouceTimeout);
   }
 
@@ -223,21 +235,28 @@ export class BrowsePlacesComponent implements OnInit {
 
     const params = this.buildQuery(this.page);
 
-    this.loading = true;
-    this.placesService
-      .filter(params)
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (places: Array<Place>) => {
-          this.places = places;
-        },
-        complete: () => {
-          this.loading = false;
-        },
-      });
+    // this.loading = true;
+    // this.placesService
+    //   .filter(params)
+    //   .pipe(takeUntilDestroyed(this.destroyRef))
+    //   .subscribe({
+    //     next: (places: Array<Place>) => {
+    //       this.places = places;
+    //     },
+    //     complete: () => {
+    //       this.loading = false;
+    //     },
+    //   });
   }
 
   searchDebounce() {
     this.debounce();
+  }
+
+  // Handle result from ShowMoreComponent
+  onPlacesLoaded(newPlaces: PlaceList) {
+    this.places.places = [...this.places.places, ...newPlaces.places];
+    this.hasMore =
+      this.places.places.length < this.places.metadata.total_places;
   }
 }

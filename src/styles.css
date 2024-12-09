@@ -4120,6 +4120,10 @@ blockquote {
   letter-spacing: -0.02em;
 }
 
+.button-primary:disabled {
+  opacity: .5;
+}
+
 .button-primary:hover {
   background-color: #ffa19f;
 }
