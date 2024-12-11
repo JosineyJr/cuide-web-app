@@ -31,4 +31,8 @@ export class SegmentsService {
       name: segments.name,
     });
   }
+
+  delete(segments: Segment): Observable<void> {
+    return this.http.delete<void>(`/segments/${segments.id}`);
+  }
 }

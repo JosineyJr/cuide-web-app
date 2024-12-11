@@ -30,4 +30,8 @@ export class ServiceTypesService {
       name: serviceType.name,
     });
   }
+
+  delete(serviceType: ServiceType): Observable<void> {
+    return this.http.delete<void>(`/service-types/${serviceType.id}`);
+  }
 }

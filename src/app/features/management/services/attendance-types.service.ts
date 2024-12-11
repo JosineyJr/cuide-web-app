@@ -30,4 +30,8 @@ export class AttendanceTypesService {
       name: attendanceType.name,
     });
   }
+
+  delete(attendanceType: AttendanceType): Observable<void> {
+    return this.http.delete<void>(`/attendance-types/${attendanceType.id}`);
+  }
 }

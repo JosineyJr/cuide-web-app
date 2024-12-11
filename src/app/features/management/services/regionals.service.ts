@@ -30,4 +30,8 @@ export class RegionalsService {
       name: regional.name,
     });
   }
+
+  delete(regional: Regional): Observable<void> {
+    return this.http.delete<void>(`/regionals/${regional.id}`);
+  }
 }

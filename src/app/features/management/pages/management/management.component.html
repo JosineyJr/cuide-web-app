@@ -37,12 +37,17 @@
         <div>
           <div class="browse-title-wrapper">
             <div class="paragraph-small">Mostrando: {{currentEntities.length}} {{currentEntity.name | lowercase }}</div>
-            <div class="button-primary w-button" (click)="addEntity(currentEntity.type)">Adicionar {{currentEntity.name | lowercase | singularize}}</div>
+            <div class="button-primary w-button" (click)="addEntity(currentEntity.type)">Adicionar {{currentEntity.name
+              | lowercase | singularize}}</div>
           </div>
           <div class="w-dyn-list">
             <div role="list" class="jobs-collection-list w-dyn-items">
               <div *ngFor="let entity of currentEntities; let i=index" role="listitem" class="w-dyn-item">
-                <a href="/{{currentEntity.type}}/{{entity.id}}" class="job-border w-inline-block">
+                <div class="job-border w-inline-block">
+                  <div class="job-tags">
+                    <div class="job-hours" (click)="navigateTo('/'+currentEntity.type+'/'+entity.id)">Editar</div>
+                    <div class="job-category" (click)="deleteEntity(entity,currentEntity.type)">Deletar</div>
+                  </div>
                   <div class="job-company-wrap" *ngIf="isInstanceOfPlace(entity)">
                     <div>
                       <div class="subheading-regular">{{getPlace(entity).attendance_types | join: 'name'}}</div>
@@ -53,7 +58,7 @@
                   </div>
                   <ng-container *ngIf="isInstanceOfPlace(entity)">
                     <div class="job-tags">
-                    <div class="job-hours">{{getPlace(entity).segment.name}}</div>
+                      <div class="job-hours">{{getPlace(entity).segment.name}}</div>
                       <div class="job-category">{{getPlace(entity).service_type.name}}</div>
                     </div>
                     <div class="job-card-details-wrap">
@@ -65,10 +70,11 @@
                       </div>
                     </div>
                   </ng-container>
-                </a>
+                </div>
               </div>
             </div>
-            <app-show-more *ngIf="currentEntity.type == 'places' && hasMore" [entity]="'places'" (result)="onPlacesLoaded($event)" />
+            <app-show-more *ngIf="currentEntity.type === 'places' && hasMore" [entity]="'places'"
+              (result)="onPlacesLoaded($event)" />
           </div>
         </div>
       </div>

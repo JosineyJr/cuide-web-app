@@ -30,4 +30,8 @@ export class ReferenceWaysService {
       name: referenceWay.name,
     });
   }
+
+  delete(referenceWay: ReferenceWay): Observable<void> {
+    return this.http.delete<void>(`/reference-ways/${referenceWay.id}`);
+  }
 }

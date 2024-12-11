@@ -74,12 +74,30 @@ export class ManagementComponent implements OnInit {
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
             next: (places: PlaceList) => {
-              this.currentEntities = places.places;
+              this.currentEntities = places.places.map(
+                (p) =>
+                  new Place(
+                    p.id,
+                    p.name,
+                    p.address,
+                    p.phone_number,
+                    p.website,
+                    p.observations,
+                    p.google_maps_link,
+                    p.google_maps_embed_link,
+                    p.service_type,
+                    p.segment,
+                    p.regionals,
+                    p.reference_ways,
+                    p.attendance_types
+                  )
+              );
               this.hasMore = places.metadata.pages > 1;
             },
           });
 
         this.currentEntity = {
+          id: 0,
           name: this.entities[0].label,
           type: this.entities[0].name,
         };
@@ -96,6 +114,7 @@ export class ManagementComponent implements OnInit {
           });
 
         this.currentEntity = {
+          id: 0,
           name: this.entities[1].label,
           type: this.entities[1].name,
         };
@@ -111,6 +130,7 @@ export class ManagementComponent implements OnInit {
           });
 
         this.currentEntity = {
+          id: 0,
           name: this.entities[2].label,
           type: this.entities[2].name,
         };
@@ -126,6 +146,7 @@ export class ManagementComponent implements OnInit {
           });
 
         this.currentEntity = {
+          id: 0,
           name: this.entities[3].label,
           type: this.entities[3].name,
         };
@@ -141,6 +162,7 @@ export class ManagementComponent implements OnInit {
           });
 
         this.currentEntity = {
+          id: 0,
           name: this.entities[4].label,
           type: this.entities[4].name,
         };
@@ -156,6 +178,7 @@ export class ManagementComponent implements OnInit {
           });
 
         this.currentEntity = {
+          id: 0,
           name: this.entities[5].label,
           type: this.entities[5].name,
         };
@@ -172,8 +195,6 @@ export class ManagementComponent implements OnInit {
       | Segment
       | ServiceType
   ): boolean {
-    console.log();
-
     return entity instanceof Place;
   }
 
@@ -212,6 +233,100 @@ export class ManagementComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  deleteEntity(entity: Entity, type?: string) {
+    switch (type) {
+      case 'places':
+        console.log('did not implement yet');
+        break;
+      case 'attendance-types':
+        this.attendanceTypesService
+          .delete({
+            id: entity.id,
+            name: entity.name,
+          })
+          .subscribe({
+            complete: () => {
+              const index = this.currentEntities.findIndex(
+                (e) => e.name === entity.name
+              );
+
+              this.currentEntities.splice(index, 1);
+            },
+          });
+        break;
+      case 'reference-ways':
+        this.referenceWaysService
+          .delete({
+            id: entity.id,
+            name: entity.name,
+          })
+          .subscribe({
+            complete: () => {
+              const index = this.currentEntities.findIndex(
+                (e) => e.name === entity.name
+              );
+
+              this.currentEntities.splice(index, 1);
+            },
+          });
+        break;
+      case 'regionals':
+        this.regionalsService
+          .delete({
+            id: entity.id,
+            name: entity.name,
+          })
+          .subscribe({
+            complete: () => {
+              const index = this.currentEntities.findIndex(
+                (e) => e.name === entity.name
+              );
+
+              this.currentEntities.splice(index, 1);
+            },
+          });
+        break;
+      case 'segments':
+        this.segmentsService
+          .delete({
+            id: entity.id,
+            name: entity.name,
+          })
+          .subscribe({
+            complete: () => {
+              const index = this.currentEntities.findIndex(
+                (e) => e.name === entity.name
+              );
+
+              this.currentEntities.splice(index, 1);
+            },
+          });
+        break;
+      case 'service-types':
+        this.serviceTypesService
+          .delete({
+            id: entity.id,
+            name: entity.name,
+          })
+          .subscribe({
+            complete: () => {
+              const index = this.currentEntities.findIndex(
+                (e) => e.name === entity.name
+              );
+
+              this.currentEntities.splice(index, 1);
+            },
+          });
+        break;
+      default:
+        break;
+    }
+  }
+
+  navigateTo(route: string) {
+    this.routerService.navigate([route]);
   }
 
   onPlacesLoaded(newPlaces: PlaceList) {
