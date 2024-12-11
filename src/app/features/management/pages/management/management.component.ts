@@ -12,13 +12,14 @@ import { HeaderComponent } from '../../../../shared/components/header/header.com
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { SingularizePipe } from '../../pipes/singularize.pipe';
 import { JoinPipe } from '../../../places/pipes/join.pipe';
-import { Place } from '../../models/place.model';
+import { Place, PlaceList } from '../../models/place.model';
 import { AttendanceType } from '../../models/attendance-type.model';
 import { ReferenceWay } from '../../models/reference-way.model';
 import { Regional } from '../../models/regional.model';
 import { Segment } from '../../models/segment.model';
 import { ServiceType } from '../../models/service-type.model';
 import { Router } from '@angular/router';
+import { ShowMoreComponent } from '../../../../shared/components/show-more/show-more.component';
 
 @Component({
   selector: 'app-management',
@@ -28,6 +29,7 @@ import { Router } from '@angular/router';
     FooterComponent,
     SingularizePipe,
     JoinPipe,
+    ShowMoreComponent,
   ],
   templateUrl: './management.component.html',
   styleUrl: './management.component.css',
@@ -47,6 +49,8 @@ export class ManagementComponent implements OnInit {
   currentEntity!: Entity;
 
   destroyRef = inject(DestroyRef);
+
+  hasMore = false;
 
   constructor(
     private readonly attendanceTypesService: AttendanceTypesService,
@@ -69,25 +73,9 @@ export class ManagementComponent implements OnInit {
           .list(1)
           .pipe(takeUntilDestroyed(this.destroyRef))
           .subscribe({
-            next: (places: Array<Place>) => {
-              this.currentEntities = places.map(
-                (p) =>
-                  new Place(
-                    p.id,
-                    p.name,
-                    p.address,
-                    p.phone_number,
-                    p.website,
-                    p.observations,
-                    p.google_maps_link,
-                    p.google_maps_embed_link,
-                    p.service_type,
-                    p.segment,
-                    p.regionals,
-                    p.reference_ways,
-                    p.attendance_types
-                  )
-              );
+            next: (places: PlaceList) => {
+              this.currentEntities = places.places;
+              this.hasMore = places.metadata.pages > 1;
             },
           });
 
@@ -224,5 +212,11 @@ export class ManagementComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  onPlacesLoaded(newPlaces: PlaceList) {
+    this.currentEntities = [...this.currentEntities, ...newPlaces.places];
+    this.hasMore =
+      this.currentEntities.length < newPlaces.metadata.total_places;
   }
 }

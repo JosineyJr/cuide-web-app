@@ -68,6 +68,7 @@
                 </a>
               </div>
             </div>
+            <app-show-more *ngIf="currentEntity.type == 'places' && hasMore" [entity]="'places'" (result)="onPlacesLoaded($event)" />
           </div>
         </div>
       </div>

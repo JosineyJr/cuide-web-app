@@ -49,3 +49,8 @@ export class Place {
     this.attendance_types = attendance_types;
   }
 }
+
+export interface PlaceList {
+  metadata: { pages: number; total_places: number };
+  places: Array<Place>;
+}

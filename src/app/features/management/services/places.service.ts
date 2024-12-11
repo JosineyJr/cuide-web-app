@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { Place } from '../models/place.model';
+import { Place, PlaceList } from '../models/place.model';
 
 @Injectable({
   providedIn: 'root',
@@ -9,9 +9,7 @@ import { Place } from '../models/place.model';
 export class PlacesService {
   constructor(private readonly http: HttpClient) {}
 
-  list(page: number): Observable<Array<Place>> {
-    return this.http
-      .get<Array<Place>>('/places', { params: { page: page } })
-      .pipe(map((data: Array<Place>) => data));
+  list(page: number): Observable<PlaceList> {
+    return this.http.get<PlaceList>('/places', { params: { page: page } });
   }
 }
