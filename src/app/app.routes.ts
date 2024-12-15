@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { AuthGuard } from './core/guards/auth.guard';
 
 export const routes: Routes = [
   {
@@ -38,6 +39,7 @@ export const routes: Routes = [
       import(
         './features/management/pages/management/management.component'
       ).then((m) => m.ManagementComponent),
+    canActivate: [AuthGuard], // Protegido por AuthGuard
   },
   {
     path: 'attendance-type',

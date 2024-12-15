@@ -3,7 +3,7 @@
 <div class="w-users-userformpagewrap account-page-wrapper">
   <div class="account-left-block">
     <div class="w-users-userloginformwrapper account-form-block">
-      <form data-wf-user-form-type="login" data-wf-user-form-redirect="/" method="post">
+      <form [formGroup]="loginForm" (ngSubmit)="login()" data-wf-user-form-redirect="/" method="post">
         <div class="w-users-userformheader account-form-title">
           <div class="margin-bottom-16">
             <h3>Entrar</h3>
@@ -11,12 +11,11 @@
         </div>
         <label for="Email">Usuário</label>
         <input type="email" maxlength="256" placeholder="" name="Email" id="wf-log-in-email" class="form-field w-input"
-          required="" data-wf-user-form-input-type="email" />
+          required="" data-wf-user-form-input-type="email" formControlName="user" />
         <label for="Password">Senha</label>
         <input type="password" maxlength="256" placeholder="" name="Password" id="wf-log-in-password"
-          class="form-field w-input" required="" data-wf-user-form-input-type="password" />
-        <input type="submit" value="Entrar" data-wait="Please wait..."
-          class="w-users-userformbutton button-primary w-button" />
+          class="form-field w-input" required="" data-wf-user-form-input-type="password" formControlName="password" />
+        <button type="submit" class="w-users-userformbutton button-primary w-button">Entrar</button>
         <div class="form-divider"></div>
       </form>
     </div>
