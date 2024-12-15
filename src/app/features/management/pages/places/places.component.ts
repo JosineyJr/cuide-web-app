@@ -63,7 +63,7 @@ export class PlacesComponent implements OnInit {
       name: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
       phoneNumber: new FormControl('', [Validators.required]),
-      website: new FormControl('', [Validators.required]),
+      website: new FormControl('', []),
       googleMapsLink: new FormControl('', [Validators.required]),
       googleMapsEmbedLink: new FormControl('', [Validators.required]),
       admissionCriteria: new FormControl('', [Validators.required]),

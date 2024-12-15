@@ -45,8 +45,8 @@
               <div *ngFor="let entity of currentEntities; let i=index" role="listitem" class="w-dyn-item">
                 <div class="job-border w-inline-block">
                   <div class="job-tags">
-                    <div class="job-hours" (click)="navigateTo('/'+currentEntity.type+'/'+entity.id)">Editar</div>
-                    <div class="job-category" (click)="deleteEntity(entity,currentEntity.type)">Deletar</div>
+                    <div class="job-hours actions" (click)="navigateTo('/'+currentEntity.type+'/'+entity.id)">Editar</div>
+                    <div class="job-category actions" (click)="deleteEntity(entity,currentEntity.type)">Deletar</div>
                   </div>
 
                   <div class="margin-bottom-24">
