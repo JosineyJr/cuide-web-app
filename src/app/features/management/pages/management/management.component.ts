@@ -85,6 +85,7 @@ export class ManagementComponent implements OnInit {
                     p.observations,
                     p.google_maps_link,
                     p.google_maps_embed_link,
+                    p.admission_criteria,
                     p.service_type,
                     p.segment,
                     p.regionals,

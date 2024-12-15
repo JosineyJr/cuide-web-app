@@ -14,15 +14,22 @@ import { AttendanceTypesService } from '../../../places/services/attendance-type
 import { SegmentsService } from '../../../places/services/segments.service';
 import { ServiceTypesService } from '../../../places/services/service-types.service';
 import { ReferenceWaysService } from '../../../places/services/reference-ways.service';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
+import { PlacesService } from '../../services/places.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-places',
   imports: [
-    FormsModule,
+    ReactiveFormsModule,
     NgMultiSelectDropDownModule,
     CommonModule,
     HeaderComponent,
@@ -33,34 +40,49 @@ import { FooterComponent } from '../../../../shared/components/footer/footer.com
 })
 export class PlacesComponent implements OnInit {
   regionals: Array<Regional> = [];
-  selectedRegionals: Array<Regional> = [];
   settingsRegionals: IDropdownSettings = {};
 
   attendanceTypes: Array<AttendanceType> = [];
-  selectedAttendanceTypes: Array<AttendanceType> = [];
   settingsAttendanceTypes: IDropdownSettings = {};
 
   segments: Array<Segment> = [];
-  selectedSegments: Array<Segment> = [];
   settingsSegments: IDropdownSettings = {};
 
   serviceTypes: Array<ServiceType> = [];
-  selectedServiceTypes: Array<ServiceType> = [];
   settingsServiceTypes: IDropdownSettings = {};
 
   referenceWays: Array<ReferenceWay> = [];
-  selectedReferenceWays: Array<ReferenceWay> = [];
   settingsReferenceWays: IDropdownSettings = {};
 
   destroyRef = inject(DestroyRef);
+
+  placesFormControl: FormGroup;
 
   constructor(
     private readonly regionalsService: RegionalsService,
     private readonly attendanceTypesService: AttendanceTypesService,
     private readonly segmentsService: SegmentsService,
     private readonly serviceTypesService: ServiceTypesService,
-    private readonly referenceWaysService: ReferenceWaysService
-  ) {}
+    private readonly referenceWaysService: ReferenceWaysService,
+    private readonly placesService: PlacesService,
+    private readonly routerService: Router
+  ) {
+    this.placesFormControl = new FormGroup({
+      name: new FormControl('', [Validators.required]),
+      address: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('', [Validators.required]),
+      website: new FormControl('', [Validators.required]),
+      googleMapsLink: new FormControl('', [Validators.required]),
+      googleMapsEmbedLink: new FormControl('', [Validators.required]),
+      admissionCriteria: new FormControl('', [Validators.required]),
+      observations: new FormControl('', [Validators.required]),
+      segment: new FormControl('', [Validators.required]),
+      serviceTypes: new FormControl('', [Validators.required]),
+      regionals: new FormControl('', [Validators.required]),
+      attendanceTypes: new FormControl('', [Validators.required]),
+      referenceWays: new FormControl('', [Validators.required]),
+    });
+  }
 
   ngOnInit() {
     this.regionalsService
@@ -163,18 +185,39 @@ export class PlacesComponent implements OnInit {
     };
   }
 
-  onItemSelect(item: any) {
-    console.log(item);
-    console.log(this.selectedRegionals);
-  }
-  OnItemDeSelect(item: any) {
-    console.log(item);
-    console.log(this.selectedRegionals);
-  }
-  onSelectAll(items: any) {
-    console.log(items);
-  }
-  onDeSelectAll(items: any) {
-    console.log(items);
+  submit() {
+    const place = {
+      name: this.placesFormControl.get('name')?.value,
+      address: this.placesFormControl.get('address')?.value,
+      phone_number: this.placesFormControl.get('phoneNumber')?.value,
+      website: this.placesFormControl.get('website')?.value,
+      observations: this.placesFormControl.get('observations')?.value,
+      google_maps_link: this.placesFormControl.get('googleMapsLink')?.value,
+      google_maps_embed_link: this.placesFormControl.get('googleMapsEmbedLink')
+        ?.value,
+      admission_criteria:
+        this.placesFormControl.get('admissionCriteria')?.value,
+      service_type_id: this.placesFormControl.get('serviceTypes')?.value[0].id,
+      segment_id: this.placesFormControl.get('segment')?.value[0].id,
+      regional_ids: this.placesFormControl
+        .get('regionals')
+        ?.value.map((r: { id: number }) => r.id),
+      reference_ways_ids: this.placesFormControl
+        .get('referenceWays')
+        ?.value.map((r: { id: number }) => r.id),
+      attendance_type_ids: this.placesFormControl
+        .get('attendanceTypes')
+        ?.value.map((r: { id: number }) => r.id),
+    };
+
+    this.placesService.create(place).subscribe({
+      next: () => {
+        alert('Serviço cadastrado com sucesso');
+        this.routerService.navigate(['/']);
+      },
+      error: () => {
+        alert('Erro ao cadastrar serviço');
+      },
+    });
   }
 }

@@ -39,9 +39,7 @@
             <li *ngFor="let referenceWay of place.reference_ways">{{referenceWay.name}}</li>
           </ul>
           <h5>Critérios de admissão no serviço</h5>
-          <ul role="list">
-            <li *ngFor="let admissionCriteria of place.admission_criteria">{{admissionCriteria.name}}</li>
-          </ul>
+          <p>{{place.admission_criteria}}</p>
           <h5>Site</h5>
           <a href="{{place.website}}" target="_blank"
             rel="noopener noreferrer">{{place.website}}</a>

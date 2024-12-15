@@ -12,4 +12,8 @@ export class PlacesService {
   list(page: number): Observable<PlaceList> {
     return this.http.get<PlaceList>('/places', { params: { page: page } });
   }
+
+  create(place: Record<string, any>): Observable<void> {
+    return this.http.post<void>('/places', place);
+  }
 }

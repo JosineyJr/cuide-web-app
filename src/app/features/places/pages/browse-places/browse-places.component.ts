@@ -209,18 +209,20 @@ export class BrowsePlacesComponent implements OnInit {
     this.debounceTimer = setTimeout(() => {
       const params = this.buildQuery(this.page);
 
-      // this.loading = true;
-      // this.placesService
-      //   .filter(params)
-      //   .pipe(takeUntilDestroyed(this.destroyRef))
-      //   .subscribe({
-      //     next: (places: Array<Place>) => {
-      //       this.places = places;
-      //     },
-      //     complete: () => {
-      //       this.loading = false;
-      //     },
-      //   });
+      this.loading = true;
+      this.placesService
+        .filter(params)
+        .pipe(takeUntilDestroyed(this.destroyRef))
+        .subscribe({
+          next: (places: PlaceList) => {
+            this.places = places;
+            this.hasMore =
+              this.places.places.length < this.places.metadata.total_places;
+          },
+          complete: () => {
+            this.loading = false;
+          },
+        });
     }, this.debouceTimeout);
   }
 

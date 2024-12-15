@@ -19,7 +19,7 @@ export class PlacesService {
     return this.http.get<Place>(`/places/${ID}`);
   }
 
-  filter(filter: string): Observable<Array<Place>> {
-    return this.http.get<Array<Place>>(`/places/filter?${filter}`);
+  filter(filter: string): Observable<PlaceList> {
+    return this.http.get<PlaceList>(`/places/filter?${filter}`);
   }
 }
