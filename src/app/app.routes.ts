@@ -42,34 +42,6 @@ export const routes: Routes = [
     canActivate: [AuthGuard], // Protegido por AuthGuard
   },
   {
-    path: 'attendance-type',
-    loadComponent: () =>
-      import(
-        './features/management/pages/attendance-types/attendance-types.component'
-      ).then((m) => m.AttendanceTypesComponent),
-  },
-  {
-    path: 'attendance-types/:id',
-    loadComponent: () =>
-      import(
-        './features/management/pages/attendance-types/attendance-types.component'
-      ).then((m) => m.AttendanceTypesComponent),
-  },
-  {
-    path: 'reference-way',
-    loadComponent: () =>
-      import(
-        './features/management/pages/reference-ways/reference-ways.component'
-      ).then((m) => m.ReferenceWaysComponent),
-  },
-  {
-    path: 'reference-ways/:id',
-    loadComponent: () =>
-      import(
-        './features/management/pages/reference-ways/reference-ways.component'
-      ).then((m) => m.ReferenceWaysComponent),
-  },
-  {
     path: 'regional',
     loadComponent: () =>
       import('./features/management/pages/regionals/regionals.component').then(

@@ -15,11 +15,7 @@ import { ServiceTypesService } from '../../services/service-types.service';
 import { ServiceType } from '../../models/service-type.model';
 import { RegionalsService } from '../../services/regionals.service';
 import { Regional } from '../../models/regional.model';
-import { AttendanceTypesService } from '../../services/attendance-types.service';
-import { AttendanceType } from '../../models/attendance-type.model';
-import { ReferenceWaysService } from '../../services/reference-ways.service';
-import { ReferenceWay } from '../../models/reference-way.model';
-import { Place, PlaceList } from '../../models/place.model';
+import { PlaceList } from '../../models/place.model';
 import { PlacesService } from '../../services/places.service';
 import { JoinPipe } from '../../pipes/join.pipe';
 import { FormsModule } from '@angular/forms';
@@ -47,8 +43,6 @@ export class BrowsePlacesComponent implements OnInit {
     { name: 'segment', label: 'Categoria', values: [] },
     { name: 'service-type', label: 'Tipo de serviço', values: [] },
     { name: 'regional', label: 'Regional', values: [] },
-    { name: 'attendance-type', label: 'Tipo de atendimento', values: [] },
-    { name: 'reference-way', label: 'Forma de encaminhamento', values: [] },
   ];
   query: Map<string, Array<number>> = new Map();
   searchQuery!: string;
@@ -70,8 +64,6 @@ export class BrowsePlacesComponent implements OnInit {
     private readonly segmentsService: SegmentsService,
     private readonly serviceTypesService: ServiceTypesService,
     private readonly regionalsService: RegionalsService,
-    private readonly attendanceTypesService: AttendanceTypesService,
-    private readonly referenceWaysService: ReferenceWaysService,
     public readonly placesService: PlacesService
   ) {}
 
@@ -112,32 +104,6 @@ export class BrowsePlacesComponent implements OnInit {
 
           for (let index = 0; index < regionals.length; index++) {
             this.checkboxStates.set(this.filters[2].name + index, false);
-          }
-        },
-      });
-
-    this.attendanceTypesService
-      .list()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (attendanceTypes: Array<AttendanceType>) => {
-          this.filters[3].values = attendanceTypes;
-
-          for (let index = 0; index < attendanceTypes.length; index++) {
-            this.checkboxStates.set(this.filters[3].name + index, false);
-          }
-        },
-      });
-
-    this.referenceWaysService
-      .list()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (referenceWays: Array<ReferenceWay>) => {
-          this.filters[4].values = referenceWays;
-
-          for (let index = 0; index < referenceWays.length; index++) {
-            this.checkboxStates.set(this.filters[4].name + index, false);
           }
         },
       });
@@ -237,25 +203,26 @@ export class BrowsePlacesComponent implements OnInit {
 
     const params = this.buildQuery(this.page);
 
-    // this.loading = true;
-    // this.placesService
-    //   .filter(params)
-    //   .pipe(takeUntilDestroyed(this.destroyRef))
-    //   .subscribe({
-    //     next: (places: Array<Place>) => {
-    //       this.places = places;
-    //     },
-    //     complete: () => {
-    //       this.loading = false;
-    //     },
-    //   });
+    this.loading = true;
+    this.placesService
+      .filter(params)
+      .pipe(takeUntilDestroyed(this.destroyRef))
+      .subscribe({
+        next: (places: PlaceList) => {
+          this.places = places;
+          this.hasMore =
+            this.places.places.length < this.places.metadata.total_places;
+        },
+        complete: () => {
+          this.loading = false;
+        },
+      });
   }
 
   searchDebounce() {
     this.debounce();
   }
 
-  // Handle result from ShowMoreComponent
   onPlacesLoaded(newPlaces: PlaceList) {
     this.places.places = [...this.places.places, ...newPlaces.places];
     this.hasMore =

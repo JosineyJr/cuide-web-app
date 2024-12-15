@@ -48,11 +48,7 @@
                     <div class="job-hours" (click)="navigateTo('/'+currentEntity.type+'/'+entity.id)">Editar</div>
                     <div class="job-category" (click)="deleteEntity(entity,currentEntity.type)">Deletar</div>
                   </div>
-                  <div class="job-company-wrap" *ngIf="isInstanceOfPlace(entity)">
-                    <div>
-                      <div class="subheading-regular">{{getPlace(entity).attendance_types | join: 'name'}}</div>
-                    </div>
-                  </div>
+
                   <div class="margin-bottom-24">
                     <h6>{{entity.name}}</h6>
                   </div>

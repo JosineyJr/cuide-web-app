@@ -1,5 +1,3 @@
-import { AttendanceType } from './attendance-type.model';
-import { ReferenceWay } from './reference-way.model';
 import { Regional } from './regional.model';
 import { Segment } from './segment.model';
 import { ServiceType } from './service-type.model';
@@ -14,11 +12,11 @@ export interface Place {
   google_maps_link: string;
   google_maps_embed_link: string;
   admission_criteria: string;
+  reference_ways: string;
+  attendance_types: string;
   service_type: ServiceType;
   segment: Segment;
   regionals: Array<Regional>;
-  reference_ways: Array<ReferenceWay>;
-  attendance_types: Array<AttendanceType>;
 }
 
 export interface PlaceList {

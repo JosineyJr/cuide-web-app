@@ -1,7 +1,5 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
-import { AttendanceTypesService } from '../../services/attendance-types.service';
 import { PlacesService } from '../../services/places.service';
-import { ReferenceWaysService } from '../../services/reference-ways.service';
 import { RegionalsService } from '../../services/regionals.service';
 import { SegmentsService } from '../../services/segments.service';
 import { ServiceTypesService } from '../../services/service-types.service';
@@ -13,8 +11,6 @@ import { FooterComponent } from '../../../../shared/components/footer/footer.com
 import { SingularizePipe } from '../../pipes/singularize.pipe';
 import { JoinPipe } from '../../../places/pipes/join.pipe';
 import { Place, PlaceList } from '../../models/place.model';
-import { AttendanceType } from '../../models/attendance-type.model';
-import { ReferenceWay } from '../../models/reference-way.model';
 import { Regional } from '../../models/regional.model';
 import { Segment } from '../../models/segment.model';
 import { ServiceType } from '../../models/service-type.model';
@@ -35,16 +31,12 @@ import { ShowMoreComponent } from '../../../../shared/components/show-more/show-
   styleUrl: './management.component.css',
 })
 export class ManagementComponent implements OnInit {
-  currentEntities: Array<
-    Place | AttendanceType | ReferenceWay | Regional | Segment | ServiceType
-  > = [];
+  currentEntities: Array<Place | Regional | Segment | ServiceType> = [];
   entities = [
     { name: 'places', label: 'Serviços' },
     { name: 'segments', label: 'Eixos' },
     { name: 'service-types', label: 'Tipos de serviço' },
     { name: 'regionals', label: 'Regionais' },
-    { name: 'attendance-types', label: 'Tipos de atendimento' },
-    { name: 'reference-ways', label: 'Formas de encaminhamento' },
   ];
   currentEntity!: Entity;
 
@@ -53,9 +45,7 @@ export class ManagementComponent implements OnInit {
   hasMore = false;
 
   constructor(
-    private readonly attendanceTypesService: AttendanceTypesService,
     private readonly placesService: PlacesService,
-    private readonly referenceWaysService: ReferenceWaysService,
     private readonly regionalsService: RegionalsService,
     private readonly segmentsService: SegmentsService,
     private readonly serviceTypesService: ServiceTypesService,
@@ -86,11 +76,11 @@ export class ManagementComponent implements OnInit {
                     p.google_maps_link,
                     p.google_maps_embed_link,
                     p.admission_criteria,
+                    p.reference_ways,
+                    p.attendance_types,
                     p.service_type,
                     p.segment,
-                    p.regionals,
-                    p.reference_ways,
-                    p.attendance_types
+                    p.regionals
                   )
               );
               this.hasMore = places.metadata.pages > 1;
@@ -152,62 +142,14 @@ export class ManagementComponent implements OnInit {
           type: this.entities[3].name,
         };
         break;
-      case 'attendance-types':
-        this.attendanceTypesService
-          .list()
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (attendanceTypes: Array<AttendanceType>) => {
-              this.currentEntities = attendanceTypes;
-            },
-          });
-
-        this.currentEntity = {
-          id: 0,
-          name: this.entities[4].label,
-          type: this.entities[4].name,
-        };
-        break;
-      case 'reference-ways':
-        this.referenceWaysService
-          .list()
-          .pipe(takeUntilDestroyed(this.destroyRef))
-          .subscribe({
-            next: (attendanceTypes: Array<AttendanceType>) => {
-              this.currentEntities = attendanceTypes;
-            },
-          });
-
-        this.currentEntity = {
-          id: 0,
-          name: this.entities[5].label,
-          type: this.entities[5].name,
-        };
-        break;
     }
   }
 
-  isInstanceOfPlace(
-    entity:
-      | Place
-      | AttendanceType
-      | ReferenceWay
-      | Regional
-      | Segment
-      | ServiceType
-  ): boolean {
+  isInstanceOfPlace(entity: Place | Regional | Segment | ServiceType): boolean {
     return entity instanceof Place;
   }
 
-  getPlace(
-    entity:
-      | Place
-      | AttendanceType
-      | ReferenceWay
-      | Regional
-      | Segment
-      | ServiceType
-  ): Place {
+  getPlace(entity: Place | Regional | Segment | ServiceType): Place {
     return entity as Place;
   }
 
@@ -240,38 +182,6 @@ export class ManagementComponent implements OnInit {
     switch (type) {
       case 'places':
         console.log('did not implement yet');
-        break;
-      case 'attendance-types':
-        this.attendanceTypesService
-          .delete({
-            id: entity.id,
-            name: entity.name,
-          })
-          .subscribe({
-            complete: () => {
-              const index = this.currentEntities.findIndex(
-                (e) => e.name === entity.name
-              );
-
-              this.currentEntities.splice(index, 1);
-            },
-          });
-        break;
-      case 'reference-ways':
-        this.referenceWaysService
-          .delete({
-            id: entity.id,
-            name: entity.name,
-          })
-          .subscribe({
-            complete: () => {
-              const index = this.currentEntities.findIndex(
-                (e) => e.name === entity.name
-              );
-
-              this.currentEntities.splice(index, 1);
-            },
-          });
         break;
       case 'regionals':
         this.regionalsService

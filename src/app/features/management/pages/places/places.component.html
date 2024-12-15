@@ -33,10 +33,10 @@
               <input type="text" class="form-field w-input" maxlength="256" name="google-maps-link" placeholder=""
                 id="google-maps-link" required="" formControlName="website" />
               <label for="Job-Level">Google Maps link</label>
-              <input type="text" class="form-field w-input" maxlength="256" name="Job-Level" data-name="Job Level"
+              <input type="text" class="form-field w-input" name="Job-Level" data-name="Job Level"
                 placeholder="" id="Job-Level" required="" formControlName="googleMapsLink" />
               <label for="Job-Level">Google Maps Embed link</label>
-              <input type="text" class="form-field w-input" maxlength="256" name="Job-Level" data-name="Job Level"
+              <input type="text" class="form-field w-input" name="Job-Level" data-name="Job Level"
                 placeholder="" id="Job-Level" required="" formControlName="googleMapsEmbedLink" />
               <label for="Job-Description">Critérios admissão</label>
               <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
@@ -68,13 +68,11 @@
                 id="regionals" class="margin-bottom-24">
               </ng-multiselect-dropdown>
               <label>Tipos de atendimentos</label>
-              <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="attendanceTypes"
-                [settings]="settingsAttendanceTypes" formControlName="attendanceTypes" class="margin-bottom-24">
-              </ng-multiselect-dropdown>
+              <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
+                data-name="Job Description" class="form-field-large w-input" formControlName="attendanceTypes"></textarea>
               <label>Formas de encaminhamento</label>
-              <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="referenceWays"
-                [settings]="settingsReferenceWays" formControlName="referenceWays" class="margin-bottom-24">
-              </ng-multiselect-dropdown>
+              <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
+                data-name="Job Description" class="form-field-large w-input" formControlName="referenceWays"></textarea>
               <button type="submit" data-wait="Please wait..." class="button-primary w-button" [disabled]="placesFormControl.invalid" >Criar</button>
             </div>
           </div>

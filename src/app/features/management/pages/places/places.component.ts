@@ -1,19 +1,15 @@
 import { Component, DestroyRef, inject, OnInit } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Segment } from '../../models/segment.model';
-import { ReferenceWay } from '../../models/reference-way.model';
 import { Regional } from '../../models/regional.model';
-import { AttendanceType } from '../../models/attendance-type.model';
 import {
   IDropdownSettings,
   NgMultiSelectDropDownModule,
 } from 'ng-multiselect-dropdown';
 import { ServiceType } from '../../models/service-type.model';
 import { RegionalsService } from '../../../places/services/regionals.service';
-import { AttendanceTypesService } from '../../../places/services/attendance-types.service';
 import { SegmentsService } from '../../../places/services/segments.service';
 import { ServiceTypesService } from '../../../places/services/service-types.service';
-import { ReferenceWaysService } from '../../../places/services/reference-ways.service';
 import {
   FormControl,
   FormGroup,
@@ -42,7 +38,6 @@ export class PlacesComponent implements OnInit {
   regionals: Array<Regional> = [];
   settingsRegionals: IDropdownSettings = {};
 
-  attendanceTypes: Array<AttendanceType> = [];
   settingsAttendanceTypes: IDropdownSettings = {};
 
   segments: Array<Segment> = [];
@@ -51,7 +46,6 @@ export class PlacesComponent implements OnInit {
   serviceTypes: Array<ServiceType> = [];
   settingsServiceTypes: IDropdownSettings = {};
 
-  referenceWays: Array<ReferenceWay> = [];
   settingsReferenceWays: IDropdownSettings = {};
 
   destroyRef = inject(DestroyRef);
@@ -60,10 +54,8 @@ export class PlacesComponent implements OnInit {
 
   constructor(
     private readonly regionalsService: RegionalsService,
-    private readonly attendanceTypesService: AttendanceTypesService,
     private readonly segmentsService: SegmentsService,
     private readonly serviceTypesService: ServiceTypesService,
-    private readonly referenceWaysService: ReferenceWaysService,
     private readonly placesService: PlacesService,
     private readonly routerService: Router
   ) {
@@ -94,15 +86,6 @@ export class PlacesComponent implements OnInit {
         },
       });
 
-    this.attendanceTypesService
-      .list()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (attendanceTypes: Array<AttendanceType>) => {
-          this.attendanceTypes = attendanceTypes;
-        },
-      });
-
     this.segmentsService
       .list()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -121,15 +104,6 @@ export class PlacesComponent implements OnInit {
         },
       });
 
-    this.referenceWaysService
-      .list()
-      .pipe(takeUntilDestroyed(this.destroyRef))
-      .subscribe({
-        next: (referenceWays: Array<ReferenceWay>) => {
-          this.referenceWays = referenceWays;
-        },
-      });
-
     this.settingsRegionals = {
       selectAllText: 'Todas',
       unSelectAllText: 'Anular seleções',
@@ -138,17 +112,6 @@ export class PlacesComponent implements OnInit {
       allowSearchFilter: true,
       searchPlaceholderText: 'Buscar',
       noFilteredDataAvailablePlaceholderText: 'Regional não encontrada',
-    };
-
-    this.settingsAttendanceTypes = {
-      selectAllText: 'Todas',
-      unSelectAllText: 'Anular seleções',
-      idField: 'id',
-      textField: 'name',
-      allowSearchFilter: true,
-      searchPlaceholderText: 'Buscar',
-      noFilteredDataAvailablePlaceholderText:
-        'Tipo de atendimento não encontrado',
     };
 
     this.settingsSegments = {
@@ -172,17 +135,6 @@ export class PlacesComponent implements OnInit {
       allowSearchFilter: true,
       noFilteredDataAvailablePlaceholderText: 'Tipo de serviço não encontrado',
     };
-
-    this.settingsReferenceWays = {
-      selectAllText: 'Todas',
-      unSelectAllText: 'Anular seleções',
-      idField: 'id',
-      textField: 'name',
-      allowSearchFilter: true,
-      searchPlaceholderText: 'Buscar',
-      noFilteredDataAvailablePlaceholderText:
-        'Forma de encaminhamento não encontrado',
-    };
   }
 
   submit() {
@@ -202,12 +154,8 @@ export class PlacesComponent implements OnInit {
       regional_ids: this.placesFormControl
         .get('regionals')
         ?.value.map((r: { id: number }) => r.id),
-      reference_ways_ids: this.placesFormControl
-        .get('referenceWays')
-        ?.value.map((r: { id: number }) => r.id),
-      attendance_type_ids: this.placesFormControl
-        .get('attendanceTypes')
-        ?.value.map((r: { id: number }) => r.id),
+      reference_ways: this.placesFormControl.get('referenceWays')?.value,
+      attendance_types: this.placesFormControl.get('attendanceTypes')?.value,
     };
 
     this.placesService.create(place).subscribe({

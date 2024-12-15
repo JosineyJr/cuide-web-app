@@ -9,7 +9,6 @@
             <h5>{{place.name}}</h5>
           </div>
         </div>
-        <h6>{{place.attendance_types | join: 'name'}}</h6>
         <div class="job-detail-wrap">
           <div class="detail-item">
             <div class="icon-regular w-embed">
@@ -34,25 +33,28 @@
         </div>
         <div class="job-post-divider"></div>
         <div class="rich-text w-richtext">
+          <h5>Tipos de atendimento</h5>
+          <p>{{place.attendance_types}}</p>
+          <div class="job-post-divider"></div>
           <h5>Formas de encaminhamento</h5>
-          <ul role="list">
-            <li *ngFor="let referenceWay of place.reference_ways">{{referenceWay.name}}</li>
-          </ul>
+          <p>{{place.reference_ways}}</p>
+          <div class="job-post-divider"></div>
           <h5>Critérios de admissão no serviço</h5>
           <p>{{place.admission_criteria}}</p>
+          <div class="job-post-divider"></div>
           <h5>Site</h5>
-          <a href="{{place.website}}" target="_blank"
-            rel="noopener noreferrer">{{place.website}}</a>
+          <a href="{{place.website}}" target="_blank" rel="noopener noreferrer">{{place.website}}</a>
+          <div class="job-post-divider"></div>
           <h5>Contato</h5>
           <p>{{place.phone_number}}</p>
+          <div class="job-post-divider"></div>
           <h5>Observações</h5>
           <p>{{place.observations}}</p>
         </div>
         <div class="job-post-divider"></div>
         <div class="margin-bottom-40">
           <div class="job-post-title-wrap">
-            <h4>Ende</h4>
-            <h4 class="business-name">reço</h4>
+            <h5>Endereço</h5>
           </div>
           <p>{{place.address}}</p>
         </div>
@@ -69,8 +71,8 @@
             </figure>
           </div>
           <div class="job-post-divider"></div>
-          <a href="{{place.google_maps_link}}" target="_blank"
-            rel="noopener noreferrer" class="button-primary w-button">Ver detalhes</a>
+          <a href="{{place.google_maps_link}}" target="_blank" rel="noopener noreferrer"
+            class="button-primary w-button">Ver detalhes</a>
         </div>
       </div>
     </div>
