@@ -39,7 +39,7 @@ export const routes: Routes = [
       import(
         './features/management/pages/management/management.component'
       ).then((m) => m.ManagementComponent),
-    canActivate: [AuthGuard], // Protegido por AuthGuard
+    canActivate: [AuthGuard],
   },
   {
     path: 'regional',
@@ -47,6 +47,7 @@ export const routes: Routes = [
       import('./features/management/pages/regionals/regionals.component').then(
         (m) => m.RegionalsComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'regionals/:id',
@@ -54,6 +55,7 @@ export const routes: Routes = [
       import('./features/management/pages/regionals/regionals.component').then(
         (m) => m.RegionalsComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'segment',
@@ -61,6 +63,7 @@ export const routes: Routes = [
       import('./features/management/pages/segments/segments.component').then(
         (m) => m.SegmentsComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'segments/:id',
@@ -68,6 +71,7 @@ export const routes: Routes = [
       import('./features/management/pages/segments/segments.component').then(
         (m) => m.SegmentsComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'service-type',
@@ -75,6 +79,7 @@ export const routes: Routes = [
       import(
         './features/management/pages/service-types/service-types.component'
       ).then((m) => m.ServiceTypesComponent),
+    canActivate: [AuthGuard],
   },
   {
     path: 'service-types/:id',
@@ -82,6 +87,7 @@ export const routes: Routes = [
       import(
         './features/management/pages/service-types/service-types.component'
       ).then((m) => m.ServiceTypesComponent),
+    canActivate: [AuthGuard],
   },
   {
     path: 'place',
@@ -89,6 +95,7 @@ export const routes: Routes = [
       import('./features/management/pages/places/places.component').then(
         (m) => m.PlacesComponent
       ),
+    canActivate: [AuthGuard],
   },
   {
     path: 'places/:id',
@@ -96,5 +103,6 @@ export const routes: Routes = [
       import('./features/management/pages/places/places.component').then(
         (m) => m.PlacesComponent
       ),
+    canActivate: [AuthGuard],
   },
 ];

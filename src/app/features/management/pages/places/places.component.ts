@@ -67,7 +67,7 @@ export class PlacesComponent implements OnInit {
       googleMapsLink: new FormControl('', [Validators.required]),
       googleMapsEmbedLink: new FormControl('', [Validators.required]),
       admissionCriteria: new FormControl('', [Validators.required]),
-      observations: new FormControl('', [Validators.required]),
+      observations: new FormControl('', []),
       segment: new FormControl('', [Validators.required]),
       serviceTypes: new FormControl('', [Validators.required]),
       regionals: new FormControl('', [Validators.required]),
@@ -123,6 +123,7 @@ export class PlacesComponent implements OnInit {
       searchPlaceholderText: 'Buscar',
       allowSearchFilter: true,
       noFilteredDataAvailablePlaceholderText: 'Eixo não encontrado',
+      closeDropDownOnSelection: true,
     };
 
     this.settingsServiceTypes = {
@@ -134,6 +135,7 @@ export class PlacesComponent implements OnInit {
       searchPlaceholderText: 'Buscar',
       allowSearchFilter: true,
       noFilteredDataAvailablePlaceholderText: 'Tipo de serviço não encontrado',
+      closeDropDownOnSelection: true,
     };
   }
 

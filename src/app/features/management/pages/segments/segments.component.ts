@@ -7,7 +7,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Segment } from '../../models/segment.model';
 import { SegmentsService } from '../../services/segments.service';
 
@@ -24,7 +24,8 @@ export class SegmentsComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly segmentsService: SegmentsService
+    private readonly segmentsService: SegmentsService,
+    private readonly router: Router
   ) {
     this.segmentForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -57,14 +58,26 @@ export class SegmentsComponent implements OnInit {
 
     if (this.segmentID) {
       this.segmentsService.update(this.segment).subscribe({
-        next: (t: void) => {},
+        next: (t: void) => {
+          alert('Eixo atualizado com sucesso');
+          this.router.navigate(['/management']);
+        },
+        error: () => {
+          alert('Erro ao atualizar eixo');
+        },
       });
 
       return;
     }
 
     this.segmentsService.create(this.segment).subscribe({
-      next: (t: void) => {},
+      next: (t: void) => {
+        alert('Eixo cadastrado com sucesso');
+        this.router.navigate(['/management']);
+      },
+      error: () => {
+        alert('Erro ao cadastrar eixo');
+      },
     });
   }
 }

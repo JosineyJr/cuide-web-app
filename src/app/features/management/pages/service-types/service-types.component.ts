@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ServiceType } from '../../models/service-type.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceTypesService } from '../../services/service-types.service';
 
 @Component({
@@ -24,7 +24,8 @@ export class ServiceTypesComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly serviceTypesService: ServiceTypesService
+    private readonly serviceTypesService: ServiceTypesService,
+    private readonly router: Router
   ) {
     this.serviceTypeForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -57,14 +58,26 @@ export class ServiceTypesComponent implements OnInit {
 
     if (this.serviceTypeID) {
       this.serviceTypesService.update(this.serviceType).subscribe({
-        next: (t: void) => {},
+        next: (t: void) => {
+          alert('Tipo de serviço atualizado com sucesso');
+          this.router.navigate(['/management']);
+        },
+        error: () => {
+          alert('Erro ao atualizar tipo de serviço');
+        },
       });
 
       return;
     }
 
     this.serviceTypesService.create(this.serviceType).subscribe({
-      next: (t: void) => {},
+      next: (t: void) => {
+        alert('Tipo de serviço cadastrado com sucesso');
+        this.router.navigate(['/management']);
+      },
+      error: () => {
+        alert('Erro ao cadastrar tipo de serviço');
+      },
     });
   }
 }

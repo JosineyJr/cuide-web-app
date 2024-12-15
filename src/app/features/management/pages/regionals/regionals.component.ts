@@ -8,7 +8,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { Regional } from '../../models/regional.model';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { RegionalsService } from '../../services/regionals.service';
 
 @Component({
@@ -24,7 +24,8 @@ export class RegionalsComponent implements OnInit {
 
   constructor(
     private readonly route: ActivatedRoute,
-    private readonly regionalsService: RegionalsService
+    private readonly regionalsService: RegionalsService,
+    private readonly router: Router
   ) {
     this.regionalForm = new FormGroup({
       name: new FormControl('', [Validators.required]),
@@ -57,14 +58,26 @@ export class RegionalsComponent implements OnInit {
 
     if (this.regionalID) {
       this.regionalsService.update(this.regional).subscribe({
-        next: (t: void) => {},
+        next: (t: void) => {
+          alert('Regional atualizada com sucesso');
+          this.router.navigate(['/management']);
+        },
+        error: () => {
+          alert('Erro ao atualizar regional');
+        },
       });
 
       return;
     }
 
     this.regionalsService.create(this.regional).subscribe({
-      next: (t: void) => {},
+      next: (t: void) => {
+        alert('Regional cadastrada com sucesso');
+        this.router.navigate(['/management']);
+      },
+      error: () => {
+        alert('Erro ao cadastrar regional');
+      },
     });
   }
 }

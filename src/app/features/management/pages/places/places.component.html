@@ -9,73 +9,58 @@
     </div>
     <div class="job-submission-form-wrapper">
       <div class="w-form">
-        <form [formGroup]="placesFormControl" (ngSubmit)="submit()" id="email-form" name="email-form" data-name="Email Form" method="get"
-          class="job-submission-form">
-          <div class="job-submission-form-section-wrapper">
-            <div id="w-node-_7456eeba-3d14-bf7a-9553-9036844f9100-748849b9" class="job-submission-form-number">
-              <div>1</div>
+        <form [formGroup]="placesFormControl" (ngSubmit)="submit()" id="email-form" name="email-form"
+          data-name="Email Form" method="get" class="job-submission-form">
+          <div id="w-node-_35571b41-498a-13b4-c487-1c69096208df-748849b9" class="job-submission-form-section">
+            <div class="margin-bottom-24">
+              <h5>Sobre</h5>
             </div>
-            <div id="w-node-_35571b41-498a-13b4-c487-1c69096208df-748849b9" class="job-submission-form-section">
-              <div class="margin-bottom-24">
-                <h5>Sobre</h5>
-              </div>
-              <label for="Job-Title">Nome</label>
-              <input type="text" class="form-field w-input" maxlength="256" name="Job-Title" data-name="Job Title"
-                placeholder="" id="Job-Title" formControlName="name" />
-              <label for="Category">Endereço</label>
-              <input type="text" class="form-field w-input" maxlength="256" name="Category" data-name="Category"
-                placeholder="" id="Category" required="" formControlName="address" />
-              <label for="Employment-Type">Contato</label>
-              <input type="text" class="form-field w-input" maxlength="256" name="Employment-Type"
-                data-name="Employment Type" placeholder="" id="Employment-Type" required=""
-                formControlName="phoneNumber" />
-              <label for="Job-Level">Site</label>
-              <input type="text" class="form-field w-input" maxlength="256" name="google-maps-link" placeholder=""
-                id="google-maps-link" required="" formControlName="website" />
-              <label for="Job-Level">Google Maps link</label>
-              <input type="text" class="form-field w-input" name="Job-Level" data-name="Job Level"
-                placeholder="" id="Job-Level" required="" formControlName="googleMapsLink" />
-              <label for="Job-Level">Google Maps Embed link</label>
-              <input type="text" class="form-field w-input" name="Job-Level" data-name="Job Level"
-                placeholder="" id="Job-Level" required="" formControlName="googleMapsEmbedLink" />
-              <label for="Job-Description">Critérios admissão</label>
-              <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
-                data-name="Job Description" class="form-field-large w-input"
-                formControlName="admissionCriteria"></textarea>
-              <label for="Job-Description">Observação</label>
-              <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
-                data-name="Job Description" class="form-field-large w-input" formControlName="observations"></textarea>
-            </div>
+            <label>Eixo</label>
+            <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="segments" [settings]="settingsSegments"
+              class="margin-bottom-24" formControlName="segment">
+            </ng-multiselect-dropdown>
+            <label for="Job-Title">Nome</label>
+            <input type="text" class="form-field w-input" maxlength="256" name="Job-Title" data-name="Job Title"
+              placeholder="" id="Job-Title" formControlName="name" />
+            <label>Tipo de serviço</label>
+            <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="serviceTypes"
+              [settings]="settingsServiceTypes" formControlName="serviceTypes" class="margin-bottom-24">
+            </ng-multiselect-dropdown>
+            <label for="Category">Endereço</label>
+            <input type="text" class="form-field w-input" maxlength="256" name="Category" data-name="Category"
+              placeholder="" id="Category" required="" formControlName="address" />
+            <label for="Employment-Type">Contato</label>
+            <input type="text" class="form-field w-input" maxlength="256" name="Employment-Type"
+              data-name="Employment Type" placeholder="" id="Employment-Type" required=""
+              formControlName="phoneNumber" />
+            <label>Regionais</label>
+            <ng-multiselect-dropdown [data]="regionals" [settings]="settingsRegionals" formControlName="regionals"
+              id="regionals" class="margin-bottom-24">
+            </ng-multiselect-dropdown>
+            <label>Tipos de atendimentos</label>
+            <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
+              data-name="Job Description" class="form-field w-input" formControlName="attendanceTypes"></textarea>
+            <label>Formas de encaminhamento</label>
+            <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
+              data-name="Job Description" class="form-field w-input" formControlName="referenceWays"></textarea>
+            <label for="Job-Description">Critérios admissão</label>
+            <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
+              data-name="Job Description" class="form-field w-input" formControlName="admissionCriteria"></textarea>
+            <label for="Job-Level">Site</label>
+            <input type="text" class="form-field w-input" maxlength="256" name="google-maps-link" placeholder=""
+              id="google-maps-link" required="" formControlName="website" />
+            <label for="Job-Description">Observação</label>
+            <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
+              data-name="Job Description" class="form-field w-input" formControlName="observations"></textarea>
+            <label for="Job-Level">Google Maps link</label>
+            <input type="text" class="form-field w-input" name="Job-Level" data-name="Job Level" placeholder=""
+              id="Job-Level" required="" formControlName="googleMapsLink" />
+            <label for="Job-Level">Google Maps Embed link</label>
+            <input type="text" class="form-field w-input" name="Job-Level" data-name="Job Level" placeholder=""
+              id="Job-Level" required="" formControlName="googleMapsEmbedLink" />
           </div>
-          <div class="job-submission-form-section-wrapper">
-            <div id="w-node-_7456eeba-3d14-bf7a-9553-9036844f9100-748849b9" class="job-submission-form-number">
-              <div>2</div>
-            </div>
-            <div id="w-node-_7198811f-31c1-b07d-c003-160563186162-748849b9" class="job-submission-form-section">
-              <div class="margin-bottom-24">
-                <h5>Especialidades</h5>
-              </div>
-              <label>Eixo</label>
-              <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="segments" [settings]="settingsSegments"
-                class="margin-bottom-24" formControlName="segment">
-              </ng-multiselect-dropdown>
-              <label>Tipo de serviço</label>
-              <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="serviceTypes"
-                [settings]="settingsServiceTypes" formControlName="serviceTypes" class="margin-bottom-24">
-              </ng-multiselect-dropdown>
-              <label>Regionais</label>
-              <ng-multiselect-dropdown [data]="regionals" [settings]="settingsRegionals" formControlName="regionals"
-                id="regionals" class="margin-bottom-24">
-              </ng-multiselect-dropdown>
-              <label>Tipos de atendimentos</label>
-              <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
-                data-name="Job Description" class="form-field-large w-input" formControlName="attendanceTypes"></textarea>
-              <label>Formas de encaminhamento</label>
-              <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
-                data-name="Job Description" class="form-field-large w-input" formControlName="referenceWays"></textarea>
-              <button type="submit" data-wait="Please wait..." class="button-primary w-button" [disabled]="placesFormControl.invalid" >Criar</button>
-            </div>
-          </div>
+          <button type="submit" data-wait="Please wait..." class="button-primary w-button"
+            [disabled]="placesFormControl.invalid">Criar</button>
         </form>
       </div>
     </div>
