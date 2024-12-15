@@ -1,4 +1,11 @@
-import { Component, DestroyRef, inject, OnInit } from '@angular/core';
+import {
+  Component,
+  DestroyRef,
+  inject,
+  OnInit,
+  Renderer2,
+  RendererFactory2,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { Segment } from '../../models/segment.model';
 import { Regional } from '../../models/regional.model';
@@ -52,13 +59,18 @@ export class PlacesComponent implements OnInit {
 
   placesFormControl: FormGroup;
 
+  private renderer: Renderer2;
+
   constructor(
     private readonly regionalsService: RegionalsService,
     private readonly segmentsService: SegmentsService,
     private readonly serviceTypesService: ServiceTypesService,
     private readonly placesService: PlacesService,
-    private readonly routerService: Router
+    private readonly routerService: Router,
+    private readonly rendererFactory: RendererFactory2
   ) {
+    this.renderer = rendererFactory.createRenderer(null, null);
+
     this.placesFormControl = new FormGroup({
       name: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
@@ -77,6 +89,12 @@ export class PlacesComponent implements OnInit {
   }
 
   ngOnInit() {
+    const styles = document.querySelectorAll('head style');
+
+    styles.forEach((styleElement) => {
+      this.renderer.removeChild(document.head, styleElement);
+    });
+
     this.regionalsService
       .list()
       .pipe(takeUntilDestroyed(this.destroyRef))
