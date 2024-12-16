@@ -26,8 +26,8 @@
               }
             ],
             "styles": [
-              "src/styles.css",
-              "src/ng-mutiselect-dropdown-theme.scss"
+              "src/ng-mutiselect-dropdown-theme.scss",
+              "src/styles.css"
             ],
             "scripts": []
           },
@@ -88,8 +88,8 @@
               }
             ],
             "styles": [
-              "src/styles.css",
-              "src/ng-mutiselect-dropdown-theme.scss"
+              "src/ng-mutiselect-dropdown-theme.scss",
+              "src/styles.css"
             ],
             "scripts": []
           }
