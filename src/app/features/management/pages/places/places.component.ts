@@ -74,7 +74,7 @@ export class PlacesComponent implements OnInit {
     this.placesFormControl = new FormGroup({
       name: new FormControl('', [Validators.required]),
       address: new FormControl('', [Validators.required]),
-      phoneNumber: new FormControl('', [Validators.required]),
+      phoneNumber: new FormControl('', []),
       website: new FormControl('', []),
       googleMapsLink: new FormControl('', [Validators.required]),
       googleMapsEmbedLink: new FormControl('', [Validators.required]),
