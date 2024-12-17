@@ -20,18 +20,18 @@
               class="margin-bottom-24" formControlName="segment">
             </ng-multiselect-dropdown>
             <label for="Job-Title">Nome</label>
-            <input type="text" class="form-field w-input" maxlength="256" name="Job-Title" data-name="Job Title"
+            <input type="text" class="form-field w-input" name="Job-Title" data-name="Job Title"
               placeholder="" id="Job-Title" formControlName="name" />
             <label>Tipo de serviço</label>
             <ng-multiselect-dropdown aria-labelledby="attendanceTypes" [data]="serviceTypes"
               [settings]="settingsServiceTypes" formControlName="serviceTypes" class="margin-bottom-24">
             </ng-multiselect-dropdown>
             <label for="Category">Endereço</label>
-            <textarea type="text" class="form-field w-input" maxlength="256" name="Category" data-name="Category"
-              placeholder="" id="Category" formControlName="address"></textarea>
+            <textarea type="text" class="form-field w-input" name="Category" data-name="Category" placeholder=""
+              id="Category" formControlName="address"></textarea>
             <label for="Employment-Type">Contato</label>
-            <textarea type="text" class="form-field w-input" maxlength="256" name="Employment-Type"
-              data-name="Employment Type" placeholder="" id="Employment-Type" formControlName="phoneNumber"></textarea>
+            <textarea type="text" class="form-field w-input" name="Employment-Type" data-name="Employment Type"
+              placeholder="" id="Employment-Type" formControlName="phoneNumber"></textarea>
             <label>Regionais</label>
             <ng-multiselect-dropdown [data]="regionals" [settings]="settingsRegionals" formControlName="regionals"
               id="regionals" class="margin-bottom-24">
@@ -46,8 +46,8 @@
             <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
               data-name="Job Description" class="form-field w-input" formControlName="admissionCriteria"></textarea>
             <label for="Job-Level">Site</label>
-            <input type="text" class="form-field w-input" maxlength="256" name="google-maps-link" placeholder=""
-              id="google-maps-link" formControlName="website" />
+            <input type="text" class="form-field w-input" name="google-maps-link" placeholder="" id="google-maps-link"
+              formControlName="website" />
             <label for="Job-Description">Observação</label>
             <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
               data-name="Job Description" class="form-field w-input" formControlName="observations"></textarea>
