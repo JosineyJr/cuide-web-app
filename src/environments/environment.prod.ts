@@ -1,5 +1,4 @@
 export const environment = {
   production: true,
-  apiUrl:
-    'https://fb28-2804-14c-5b87-547b-2937-73c2-5058-b637.ngrok-free.app/v1',
+  apiUrl: 'https://cuide-api.onrender.com/v1',
 };
