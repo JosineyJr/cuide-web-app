@@ -20,6 +20,7 @@ import { PlacesService } from '../../services/places.service';
 import { JoinPipe } from '../../pipes/join.pipe';
 import { FormsModule } from '@angular/forms';
 import { ShowMoreComponent } from '../../../../shared/components/show-more/show-more.component';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-browse-places',
@@ -30,6 +31,7 @@ import { ShowMoreComponent } from '../../../../shared/components/show-more/show-
     JoinPipe,
     FormsModule,
     ShowMoreComponent,
+    LoadingComponent,
   ],
   templateUrl: './browse-places.component.html',
   styleUrl: './browse-places.component.css',

@@ -88,9 +88,7 @@
           </div>
           <app-show-more *ngIf="hasMore" [entity]="'places'" (result)="onPlacesLoaded($event)" />
         </div>
-        <div *ngIf="loading">
-          <p>PESQUISANDO...</p>
-        </div>
+        <app-loading *ngIf="loading" class="title-wrap-center-large"/>
       </div>
     </div>
   </div>
