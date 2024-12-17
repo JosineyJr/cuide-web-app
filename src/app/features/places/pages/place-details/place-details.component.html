@@ -59,7 +59,7 @@
           <p>{{place.address}}</p>
         </div>
       </div>
-      <div class="job-post-side-menu">
+      <div class="job-post-side-menu" *ngIf="place.google_maps_link !== '-'">
         <div class="job-post-side-menu-card">
           <div class="margin-bottom-24">
             <h5>Localização</h5>
