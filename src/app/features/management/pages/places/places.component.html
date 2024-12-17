@@ -28,10 +28,10 @@
             </ng-multiselect-dropdown>
             <label for="Category">Endereço</label>
             <input type="text" class="form-field w-input" maxlength="256" name="Category" data-name="Category"
-              placeholder="" id="Category" required="" formControlName="address" />
+              placeholder="" id="Category"  formControlName="address" />
             <label for="Employment-Type">Contato</label>
             <input type="text" class="form-field w-input" maxlength="256" name="Employment-Type"
-              data-name="Employment Type" placeholder="" id="Employment-Type" required=""
+              data-name="Employment Type" placeholder="" id="Employment-Type"
               formControlName="phoneNumber" />
             <label>Regionais</label>
             <ng-multiselect-dropdown [data]="regionals" [settings]="settingsRegionals" formControlName="regionals"
@@ -48,16 +48,16 @@
               data-name="Job Description" class="form-field w-input" formControlName="admissionCriteria"></textarea>
             <label for="Job-Level">Site</label>
             <input type="text" class="form-field w-input" maxlength="256" name="google-maps-link" placeholder=""
-              id="google-maps-link" required="" formControlName="website" />
+              id="google-maps-link"  formControlName="website" />
             <label for="Job-Description">Observação</label>
             <textarea placeholder="" maxlength="5000" id="Job-Description" name="Job-Description"
               data-name="Job Description" class="form-field w-input" formControlName="observations"></textarea>
             <label for="Job-Level">Google Maps link</label>
             <input type="text" class="form-field w-input" name="Job-Level" data-name="Job Level" placeholder=""
-              id="Job-Level" required="" formControlName="googleMapsLink" />
+              id="Job-Level"  formControlName="googleMapsLink" />
             <label for="Job-Level">Google Maps Embed link</label>
             <input type="text" class="form-field w-input" name="Job-Level" data-name="Job Level" placeholder=""
-              id="Job-Level" required="" formControlName="googleMapsEmbedLink" />
+              id="Job-Level"  formControlName="googleMapsEmbedLink" />
           </div>
           <button type="submit" data-wait="Please wait..." class="button-primary w-button"
             [disabled]="placesFormControl.invalid">Criar</button>
