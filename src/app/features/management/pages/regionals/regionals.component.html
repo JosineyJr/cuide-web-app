@@ -7,7 +7,8 @@
         <h2>{{regionalID == null ? 'Cadastre' : 'Altere' }} uma regional</h2>
       </div>
     </div>
-    <div class="job-submission-form-wrapper">
+    <app-loading *ngIf="loading" />
+    <div [style]="loading ? 'display: none' : ''" class="job-submission-form-wrapper">
       <div class="w-form">
         <form [formGroup]="regionalForm" (ngSubmit)="onSubmit()" id="email-form" name="email-form"
           data-name="Email Form" method="get" class="job-submission-form">

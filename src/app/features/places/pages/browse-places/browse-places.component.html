@@ -15,9 +15,9 @@
           src="https://cdn.prod.website-files.com/63337525695d8ba70ab44222/6344f0df34a6816523478691_Search%20Icon.svg"
           loading="eager" alt="" class="icon-regular" />
         <input class="search-field w-input" maxlength="256" name="query" placeholder="Pesquisar…" type="search"
-          id="search" required="" (input)="searchDebounce()" [(ngModel)]="searchQuery"  />
+          id="search" required="" (input)="searchDebounce()" [(ngModel)]="searchQuery" />
       </div>
-      <input class="search-button w-button" value="Pesquisar" (click)="search()"  readonly/>
+      <input class="search-button w-button" value="Pesquisar" (click)="search()" readonly />
     </form>
   </div>
 </div>
@@ -48,8 +48,9 @@
                       <label class="w-checkbox browse-checkbox">
                         <div class="w-checkbox-input w-checkbox-input--inputType-custom checkbox"
                           [class.w--redirected-checked]="checkboxStates.get(filter.name+i)"></div>
-                        <input type="checkbox" id="checkbox-{{filter.name}}-{{i}}" name="checkbox-{{filter.name}}-{{i}}" data-name="checkbox-{{filter.name}}-{{i}}"
-                          (click)="$event.stopPropagation()" style="opacity: 0; position: absolute; z-index: -1" />
+                        <input type="checkbox" id="checkbox-{{filter.name}}-{{i}}" name="checkbox-{{filter.name}}-{{i}}"
+                          data-name="checkbox-{{filter.name}}-{{i}}" (click)="$event.stopPropagation()"
+                          style="opacity: 0; position: absolute; z-index: -1" />
                         <span class="paragraph-regular w-form-label">{{value.name}}</span>
                       </label>
                     </div>
@@ -86,9 +87,9 @@
               </div>
             </div>
           </div>
-          <app-show-more *ngIf="hasMore" [entity]="'places'" (result)="onPlacesLoaded($event)" />
+          <app-show-more *ngIf="hasMore" [entity]="'places'" [query]="query" (result)="onPlacesLoaded($event)" />
         </div>
-        <app-loading *ngIf="loading" class="title-wrap-center-large"/>
+        <app-loading *ngIf="loading" class="title-wrap-center-large" />
       </div>
     </div>
   </div>

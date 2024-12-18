@@ -27,7 +27,9 @@ import { CommonModule } from '@angular/common';
 import { HeaderComponent } from '../../../../shared/components/header/header.component';
 import { FooterComponent } from '../../../../shared/components/footer/footer.component';
 import { PlacesService } from '../../services/places.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Place } from '../../models/place.model';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-places',
@@ -37,6 +39,7 @@ import { Router } from '@angular/router';
     CommonModule,
     HeaderComponent,
     FooterComponent,
+    LoadingComponent,
   ],
   templateUrl: './places.component.html',
   styleUrl: './places.component.css',
@@ -59,6 +62,10 @@ export class PlacesComponent implements OnInit {
 
   placesFormControl: FormGroup;
 
+  placeID: number | null;
+
+  loading = false;
+
   private renderer: Renderer2;
 
   constructor(
@@ -67,8 +74,10 @@ export class PlacesComponent implements OnInit {
     private readonly serviceTypesService: ServiceTypesService,
     private readonly placesService: PlacesService,
     private readonly routerService: Router,
-    private readonly rendererFactory: RendererFactory2
+    private readonly rendererFactory: RendererFactory2,
+    private readonly route: ActivatedRoute
   ) {
+    this.placeID = null;
     this.renderer = rendererFactory.createRenderer(null, null);
 
     this.placesFormControl = new FormGroup({
@@ -89,12 +98,7 @@ export class PlacesComponent implements OnInit {
   }
 
   ngOnInit() {
-    const styles = document.querySelectorAll('head style');
-
-    styles.forEach((styleElement) => {
-      this.renderer.removeChild(document.head, styleElement);
-    });
-
+    this.loading = true;
     this.regionalsService
       .list()
       .pipe(takeUntilDestroyed(this.destroyRef))
@@ -155,9 +159,66 @@ export class PlacesComponent implements OnInit {
       noFilteredDataAvailablePlaceholderText: 'Tipo de serviço não encontrado',
       closeDropDownOnSelection: true,
     };
+
+    const placeID = this.route.snapshot.paramMap.get('id');
+
+    if (placeID) {
+      this.placeID = parseInt(placeID);
+      this.placesService.get(this.placeID).subscribe({
+        next: (place: Place) => {
+          this.placesFormControl.get('name')?.setValue(place.name);
+          this.placesFormControl.get('address')?.setValue(place.address);
+          this.placesFormControl
+            .get('phoneNumber')
+            ?.setValue(place.phone_number);
+          this.placesFormControl.get('website')?.setValue(place.website);
+          this.placesFormControl
+            .get('observations')
+            ?.setValue(place.observations);
+          this.placesFormControl
+            .get('googleMapsLink')
+            ?.setValue(place.google_maps_link);
+          this.placesFormControl
+            .get('googleMapsEmbedLink')
+            ?.setValue(place.google_maps_embed_link);
+          this.placesFormControl
+            .get('referenceWays')
+            ?.setValue(place.reference_ways);
+          this.placesFormControl
+            .get('attendanceTypes')
+            ?.setValue(place.attendance_types);
+          this.placesFormControl
+            .get('admissionCriteria')
+            ?.setValue(place.admission_criteria);
+          this.placesFormControl
+            .get('serviceTypes')
+            ?.setValue([place.service_type]);
+          this.placesFormControl.get('segment')?.setValue([place.segment]);
+          this.placesFormControl.get('regionals')?.setValue(place.regionals);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+        error: (err) => {
+          console.log('error', err);
+          alert('Erro ao carregar serviço');
+          this.loading = false;
+        },
+      });
+    } else {
+      this.loading = false;
+    }
+
+    const styles = document.querySelectorAll('head style');
+
+    styles.forEach((styleElement) => {
+      this.renderer.removeChild(document.head, styleElement);
+    });
   }
 
   submit() {
+    this.loading = true;
+
     const place = {
       name: this.placesFormControl.get('name')?.value,
       address: this.placesFormControl.get('address')?.value,
@@ -178,13 +239,32 @@ export class PlacesComponent implements OnInit {
       attendance_types: this.placesFormControl.get('attendanceTypes')?.value,
     };
 
-    this.placesService.create(place).subscribe({
+    if (!this.placeID) {
+      this.placesService.create(place).subscribe({
+        next: () => {
+          alert('Serviço cadastrado com sucesso');
+          this.routerService.navigate(['/']);
+        },
+        complete: () => {
+          this.loading = false;
+        },
+        error: (err) => {
+          console.log('error', err);
+          alert('Erro ao cadastrar serviço');
+          this.loading = false;
+        },
+      });
+
+      return;
+    }
+
+    this.placesService.update(this.placeID, place).subscribe({
       next: () => {
-        alert('Serviço cadastrado com sucesso');
-        this.routerService.navigate(['/']);
+        alert('Serviço atualizado com sucesso');
+        this.routerService.navigate([`/place-details/${this.placeID}`]);
       },
       error: () => {
-        alert('Erro ao cadastrar serviço');
+        alert('Erro ao atualizar serviço');
       },
     });
   }

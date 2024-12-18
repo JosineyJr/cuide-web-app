@@ -10,10 +10,18 @@ import {
 import { ServiceType } from '../../models/service-type.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ServiceTypesService } from '../../services/service-types.service';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-service-types',
-  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    ReactiveFormsModule,
+    LoadingComponent,
+    CommonModule,
+  ],
   templateUrl: './service-types.component.html',
   styleUrl: './service-types.component.css',
 })
@@ -21,6 +29,7 @@ export class ServiceTypesComponent implements OnInit {
   serviceTypeForm: FormGroup;
   serviceTypeID: number | null;
   serviceType: ServiceType;
+  loading = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -42,6 +51,7 @@ export class ServiceTypesComponent implements OnInit {
     const serviceTypeID = this.route.snapshot.paramMap.get('id');
 
     if (serviceTypeID) {
+      this.loading = true;
       this.serviceTypeID = parseInt(serviceTypeID);
 
       this.serviceTypesService.get(this.serviceTypeID).subscribe({
@@ -49,11 +59,20 @@ export class ServiceTypesComponent implements OnInit {
           this.serviceType = serviceType;
           this.serviceTypeForm.get('name')?.setValue(this.serviceType.name);
         },
+        complete: () => {
+          this.loading = false;
+        },
+        error: (err) => {
+          console.log('error', err);
+          alert('Erro ao carregar tipo de serviço');
+          this.loading = false;
+        },
       });
     }
   }
 
   onSubmit() {
+    this.loading = true;
     this.serviceType.name = this.serviceTypeForm.get('name')?.value;
 
     if (this.serviceTypeID) {
@@ -62,7 +81,11 @@ export class ServiceTypesComponent implements OnInit {
           alert('Tipo de serviço atualizado com sucesso');
           this.router.navigate(['/management']);
         },
+        complete: () => {
+          this.loading = false;
+        },
         error: () => {
+          this.loading = false;
           alert('Erro ao atualizar tipo de serviço');
         },
       });
@@ -75,7 +98,11 @@ export class ServiceTypesComponent implements OnInit {
         alert('Tipo de serviço cadastrado com sucesso');
         this.router.navigate(['/management']);
       },
+      complete: () => {
+        this.loading = false;
+      },
       error: () => {
+        this.loading = false;
         alert('Erro ao cadastrar tipo de serviço');
       },
     });

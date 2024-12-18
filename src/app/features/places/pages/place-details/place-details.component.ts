@@ -41,7 +41,6 @@ export class PlaceDetailsComponent {
           this.safeEmbedLink = this.sanitizer.bypassSecurityTrustHtml(
             this.place.google_maps_embed_link
           );
-          console.log(place.google_maps_embed_link);
         },
         complete: () => {
           this.loading = false;

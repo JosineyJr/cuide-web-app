@@ -7475,6 +7475,10 @@ blockquote {
     -ms-flex-pack: start;
     justify-content: flex-start;
   }
+
+  .button-primary {
+    width: 100%;
+  }
 }
 
 @media screen and (max-width: 767px) {

@@ -46,7 +46,7 @@ export class BrowsePlacesComponent implements OnInit {
     { name: 'service-type', label: 'Tipo de serviço', values: [] },
     { name: 'regional', label: 'Regional', values: [] },
   ];
-  query: Map<string, Array<number>> = new Map();
+  query: Map<string, Array<number | string>> = new Map();
   searchQuery!: string;
   loading = false;
   hasMore = true;
@@ -159,7 +159,7 @@ export class BrowsePlacesComponent implements OnInit {
     params.append('page', page.toString());
 
     if (this.searchQuery?.length > 1) {
-      params.append('name', this.searchQuery);
+      this.query.set('name', [this.searchQuery]);
     }
 
     for (const [filterName, filterValues] of this.query.entries()) {
@@ -176,6 +176,8 @@ export class BrowsePlacesComponent implements OnInit {
 
     this.debounceTimer = setTimeout(() => {
       const params = this.buildQuery(this.page);
+
+      console.log(this.query);
 
       this.loading = true;
       this.placesService

@@ -1,1 +1,2 @@
-<button class="search-button w-button" (click)="load()" [disabled]="!hasMore">Mostrar mais</button>
+<app-loading *ngIf="loading"/>
+<button class="search-button w-button" *ngIf="!loading" (click)="load()" [disabled]="!hasMore">Mostrar mais</button>

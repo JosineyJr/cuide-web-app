@@ -10,10 +10,18 @@ import {
 import { Regional } from '../../models/regional.model';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RegionalsService } from '../../services/regionals.service';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-regionals',
-  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    ReactiveFormsModule,
+    LoadingComponent,
+    CommonModule,
+  ],
   templateUrl: './regionals.component.html',
   styleUrl: './regionals.component.css',
 })
@@ -21,6 +29,7 @@ export class RegionalsComponent implements OnInit {
   regionalForm: FormGroup;
   regionalID: number | null;
   regional: Regional;
+  loading = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -42,6 +51,7 @@ export class RegionalsComponent implements OnInit {
     const regionalID = this.route.snapshot.paramMap.get('id');
 
     if (regionalID) {
+      this.loading = true;
       this.regionalID = parseInt(regionalID);
 
       this.regionalsService.get(this.regionalID).subscribe({
@@ -49,11 +59,20 @@ export class RegionalsComponent implements OnInit {
           this.regional = regional;
           this.regionalForm.get('name')?.setValue(this.regional.name);
         },
+        complete: () => {
+          this.loading = false;
+        },
+        error: (err) => {
+          console.log('error', err);
+          alert('Erro ao carregar regional');
+          this.loading = false;
+        },
       });
     }
   }
 
   onSubmit() {
+    this.loading = true;
     this.regional.name = this.regionalForm.get('name')?.value;
 
     if (this.regionalID) {
@@ -62,7 +81,11 @@ export class RegionalsComponent implements OnInit {
           alert('Regional atualizada com sucesso');
           this.router.navigate(['/management']);
         },
+        complete: () => {
+          this.loading = false;
+        },
         error: () => {
+          this.loading = false;
           alert('Erro ao atualizar regional');
         },
       });
@@ -75,7 +98,11 @@ export class RegionalsComponent implements OnInit {
         alert('Regional cadastrada com sucesso');
         this.router.navigate(['/management']);
       },
+      complete: () => {
+        this.loading = false;
+      },
       error: () => {
+        this.loading = false;
         alert('Erro ao cadastrar regional');
       },
     });

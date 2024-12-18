@@ -10,10 +10,18 @@ import {
 import { ActivatedRoute, Router } from '@angular/router';
 import { Segment } from '../../models/segment.model';
 import { SegmentsService } from '../../services/segments.service';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-segments',
-  imports: [HeaderComponent, FooterComponent, ReactiveFormsModule],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    ReactiveFormsModule,
+    LoadingComponent,
+    CommonModule,
+  ],
   templateUrl: './segments.component.html',
   styleUrl: './segments.component.css',
 })
@@ -21,6 +29,7 @@ export class SegmentsComponent implements OnInit {
   segmentForm: FormGroup;
   segmentID: number | null;
   segment: Segment;
+  loading = false;
 
   constructor(
     private readonly route: ActivatedRoute,
@@ -42,6 +51,7 @@ export class SegmentsComponent implements OnInit {
     const segmentID = this.route.snapshot.paramMap.get('id');
 
     if (segmentID) {
+      this.loading = true;
       this.segmentID = parseInt(segmentID);
 
       this.segmentsService.get(this.segmentID).subscribe({
@@ -49,11 +59,20 @@ export class SegmentsComponent implements OnInit {
           this.segment = segment;
           this.segmentForm.get('name')?.setValue(this.segment.name);
         },
+        complete: () => {
+          this.loading = false;
+        },
+        error: (err) => {
+          console.log('error', err);
+          alert('Erro ao carregar eixo');
+          this.loading = false;
+        },
       });
     }
   }
 
   onSubmit() {
+    this.loading = true;
     this.segment.name = this.segmentForm.get('name')?.value;
 
     if (this.segmentID) {
@@ -62,7 +81,11 @@ export class SegmentsComponent implements OnInit {
           alert('Eixo atualizado com sucesso');
           this.router.navigate(['/management']);
         },
+        complete: () => {
+          this.loading = false;
+        },
         error: () => {
+          this.loading = false;
           alert('Erro ao atualizar eixo');
         },
       });
@@ -75,7 +98,11 @@ export class SegmentsComponent implements OnInit {
         alert('Eixo cadastrado com sucesso');
         this.router.navigate(['/management']);
       },
+      complete: () => {
+        this.loading = false;
+      },
       error: () => {
+        this.loading = false;
         alert('Erro ao cadastrar eixo');
       },
     });

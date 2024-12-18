@@ -17,7 +17,6 @@
       <div class="w-layout-grid browse-grid">
         <div class="browse-column">
           <div class="w-form">
-            <form id="email-form-2" name="email-form-2" data-name="Email Form 2" method="get">
               <div class="browse-menu">
                 <div class="filters-title-wrapper">
                   <img
@@ -27,14 +26,13 @@
                 </div>
                 <div *ngFor="let entity of entities" data-hover="false" data-delay="0"
                   class="browse-dropdown w-dropdown">
-                  <input readonly class="w-users-userformbutton button-primary w-button" value="{{entity.label}}"
-                    (click)="setEntity(entity.name)" />
+                  <button type="button" readonly class="w-users-userformbutton button-primary w-button"
+                    (click)="setEntity(entity.name)">{{entity.label}}</button>
                 </div>
               </div>
-            </form>
           </div>
         </div>
-        <div>
+        <div *ngIf="!loading">
           <div class="browse-title-wrapper">
             <div class="paragraph-small">Mostrando: {{currentEntities.length}} {{currentEntity.name | lowercase }}</div>
             <div class="button-primary w-button" (click)="addEntity(currentEntity.type)">Adicionar {{currentEntity.name
@@ -73,6 +71,7 @@
               (result)="onPlacesLoaded($event)" />
           </div>
         </div>
+        <app-loading *ngIf="loading"/>
       </div>
     </div>
   </div>

@@ -16,6 +16,7 @@ import { Segment } from '../../models/segment.model';
 import { ServiceType } from '../../models/service-type.model';
 import { Router } from '@angular/router';
 import { ShowMoreComponent } from '../../../../shared/components/show-more/show-more.component';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-management',
@@ -26,6 +27,7 @@ import { ShowMoreComponent } from '../../../../shared/components/show-more/show-
     SingularizePipe,
     JoinPipe,
     ShowMoreComponent,
+    LoadingComponent,
   ],
   templateUrl: './management.component.html',
   styleUrl: './management.component.css',
@@ -43,6 +45,7 @@ export class ManagementComponent implements OnInit {
   destroyRef = inject(DestroyRef);
 
   hasMore = false;
+  loading = true;
 
   constructor(
     private readonly placesService: PlacesService,
@@ -57,6 +60,8 @@ export class ManagementComponent implements OnInit {
   }
 
   setEntity(type: string) {
+    this.loading = true;
+
     switch (type) {
       case 'places':
         this.placesService
@@ -85,6 +90,14 @@ export class ManagementComponent implements OnInit {
               );
               this.hasMore = places.metadata.pages > 1;
             },
+            complete: () => {
+              this.loading = false;
+            },
+            error: (err) => {
+              console.log('error:', err);
+
+              this.loading = false;
+            },
           });
 
         this.currentEntity = {
@@ -102,6 +115,14 @@ export class ManagementComponent implements OnInit {
             next: (segments: Array<Segment>) => {
               this.currentEntities = segments;
             },
+            complete: () => {
+              this.loading = false;
+            },
+            error: (err) => {
+              console.log('error:', err);
+
+              this.loading = false;
+            },
           });
 
         this.currentEntity = {
@@ -118,6 +139,14 @@ export class ManagementComponent implements OnInit {
             next: (segments: Array<Segment>) => {
               this.currentEntities = segments;
             },
+            complete: () => {
+              this.loading = false;
+            },
+            error: (err) => {
+              console.log('error:', err);
+
+              this.loading = false;
+            },
           });
 
         this.currentEntity = {
@@ -133,6 +162,14 @@ export class ManagementComponent implements OnInit {
           .subscribe({
             next: (regionals: Array<Regional>) => {
               this.currentEntities = regionals;
+            },
+            complete: () => {
+              this.loading = false;
+            },
+            error: (err) => {
+              console.log('error:', err);
+
+              this.loading = false;
             },
           });
 
@@ -179,9 +216,30 @@ export class ManagementComponent implements OnInit {
   }
 
   deleteEntity(entity: Entity, type?: string) {
+    this.loading = true;
+
     switch (type) {
       case 'places':
-        console.log('did not implement yet');
+        this.placesService.delete(entity.id).subscribe({
+          next: () => {
+            alert('Serviço deletado com sucesso');
+          },
+          complete: () => {
+            const index = this.currentEntities.findIndex(
+              (e) => e.name === entity.name
+            );
+
+            this.currentEntities.splice(index, 1);
+
+            this.loading = false;
+          },
+          error: (err) => {
+            console.log('error:', err);
+
+            alert('Erro ao deletar serviço');
+            this.loading = false;
+          },
+        });
         break;
       case 'regionals':
         this.regionalsService
@@ -190,12 +248,23 @@ export class ManagementComponent implements OnInit {
             name: entity.name,
           })
           .subscribe({
+            next: () => {
+              alert('Regional deletada com sucesso');
+            },
             complete: () => {
               const index = this.currentEntities.findIndex(
                 (e) => e.name === entity.name
               );
 
               this.currentEntities.splice(index, 1);
+
+              this.loading = false;
+            },
+            error: (err) => {
+              console.log('error:', err);
+
+              alert('Erro ao deletar regional');
+              this.loading = false;
             },
           });
         break;
@@ -206,12 +275,23 @@ export class ManagementComponent implements OnInit {
             name: entity.name,
           })
           .subscribe({
+            next: () => {
+              alert('Eixo deletado com sucesso');
+            },
             complete: () => {
               const index = this.currentEntities.findIndex(
                 (e) => e.name === entity.name
               );
 
               this.currentEntities.splice(index, 1);
+
+              this.loading = false;
+            },
+            error: (err) => {
+              console.log('error:', err);
+
+              alert('Erro ao deletar eixo');
+              this.loading = false;
             },
           });
         break;
@@ -222,16 +302,28 @@ export class ManagementComponent implements OnInit {
             name: entity.name,
           })
           .subscribe({
+            next: () => {
+              alert('Tipo de serviço deletado com sucesso');
+            },
             complete: () => {
               const index = this.currentEntities.findIndex(
                 (e) => e.name === entity.name
               );
 
               this.currentEntities.splice(index, 1);
+
+              this.loading = false;
+            },
+            error: (err) => {
+              console.log('error:', err);
+
+              alert('Erro ao deletar tipo de serviço');
+              this.loading = false;
             },
           });
         break;
       default:
+        this.loading = false;
         break;
     }
   }
