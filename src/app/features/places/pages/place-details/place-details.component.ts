@@ -8,10 +8,17 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { JoinPipe } from '../../pipes/join.pipe';
 import { CommonModule } from '@angular/common';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { LoadingComponent } from '../../../../shared/components/loading/loading.component';
 
 @Component({
   selector: 'app-place-details',
-  imports: [HeaderComponent, FooterComponent, JoinPipe, CommonModule],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    JoinPipe,
+    CommonModule,
+    LoadingComponent,
+  ],
   templateUrl: './place-details.component.html',
   styleUrl: './place-details.component.css',
 })

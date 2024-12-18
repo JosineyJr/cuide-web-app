@@ -1,8 +1,9 @@
 <app-header></app-header>
 
-<div class="section-regular" *ngIf="!loading">
+<div class="section-regular">
   <div class="container-regular">
-    <div data-w-id="bacfde91-e5ae-599d-8bac-a9d503461e3b" class="w-layout-grid job-post-grid">
+    <app-loading *ngIf="loading" />
+    <div [style]="loading ? 'display: none' : ''" data-w-id="bacfde91-e5ae-599d-8bac-a9d503461e3b" class="w-layout-grid job-post-grid">
       <div class="job-post-content">
         <div class="job-post-header-wrap">
           <div>
